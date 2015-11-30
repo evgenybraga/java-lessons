@@ -72,8 +72,8 @@ public class TestLesson01 {
     public static void main(String[] args) {
         System.out.println(new Timestamp(new Date().getTime()));
         /*
-        ArrayUtilsBuiltIn.printCharArray(testchar1x);
-        ArrayUtilsBuiltIn.printStringArray(teststr2x);
+        ArrayUtils.printCharArray(testchar1x);
+        ArrayUtils.printStringArray(teststr2x);
 
         for (int i = 0; i < testint2x.length; i++)
         {
@@ -82,10 +82,10 @@ public class TestLesson01 {
         System.out.println();
         for (int i = 0; i < testint2x.length; i++)
         {
-            System.out.println(Arrays.toString(ArrayUtilsBuiltIn.invertIntArraySign(testint2x)[i]));
+            System.out.println(Arrays.toString(ArrayUtils.invertIntArraySign(testint2x)[i]));
         }
 
-        ArrayUtilsBuiltIn.invertIntArraySign(testint2x);
+        ArrayUtils.invertIntArraySign(testint2x);
         */
         //System.out.println(ArrayUtils.getMax(5, 4, 3, 2, 1));
         //System.out.println(ArrayUtils.charArrayToString(testchar1x));
