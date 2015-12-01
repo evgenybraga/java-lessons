@@ -10,30 +10,23 @@ public class TestFridge
     {
         final char op = (char)8212;  //"—"
         final char cl = (char)124; //"|"
-        char[][] fr = {{cl, op, cl}, {op, op, op}, {op, op, op}};
+        char[][] fr = {{cl, cl, cl}, {cl, cl, cl}, {cl, cl, cl}};
 
         //FridgeGame game = new FridgeGame(fr);
-        FridgeGame game = new FridgeGame(2);
+        FridgeGame game = new FridgeGame(4);
         System.out.println("Base state");
         game.printFridgeState();
         System.out.println("------------------------");
         System.out.println(game.isLockedExists());
-        for (int i = 0; i < 10000; i++)
+        int cnt = 0;
+        while (game.isLockedExists() || cnt >= 1000000)
         {
-            if (game.isLockedExists())
-            {
-                game.switchLocked(true);
-            }
-            else
-            {
-                System.out.println(i);
-                break;
-            }
+            game.switchLocked(true);
+            cnt++;
         }
 
 
-
-        game.printFridgeState();
+        game.printFridgeState();System.out.println(cnt);
         /*
         while (game.isLockedExists())
         {

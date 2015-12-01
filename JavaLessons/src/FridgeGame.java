@@ -99,20 +99,25 @@ public class FridgeGame
 
         if (lockedList.size() > 0)
         {
+            int cnt = 0;
             for (int lockidx = 0; lockidx < lockedList.size(); lockidx++)
             {
-                if (printresult)
+                /*if (printresult)
                 {
                     System.out.println("Switch " + lockedList.get(lockidx).lockedLatchPos);
                 }
+                */
 
                 doSwitch(lockedList.get(lockidx).lockedLatchRow, lockedList.get(lockidx).lockedLatchCol);
+                cnt++;
 
-                if (printresult)
-                {
-                    printFridgeState();
-                }
             }
+            if (printresult)
+            {
+                printFridgeState();
+                System.out.println(cnt + " switched");
+            }
+
         }
     }
 
