@@ -6,26 +6,31 @@ import java.util.Random;
  */
 public class FridgeGame
 {
-    private class LockedList
+    private class Latch
     {
-        final int lockedLatchRow;
-        final int lockedLatchCol;
-        final String lockedLatchPos;
+        final int latchRow;
+        final int latchCol;
+        final String latchPosition;
 
-        LockedList(int row, int col)
+        Latch(int row, int col)
         {
-            this.lockedLatchRow = row;
-            this.lockedLatchCol = col;
-            this.lockedLatchPos = "row = " + row + "; col = " + col;
+            this.latchRow = row;
+            this.latchCol = col;
+            this.latchPosition = "row = " + row + "; col = " + col;
         }
     }
 
-    private final static char STATE_OPEN = (char)8212;  //"—"
+    private final static char STATE_OPEN = (char)8212;  //"â€”"
     private final static char STATE_LOCKED = (char)124; //"|"
+    private final static char STATE_UNDEFINED = (char)0; //"|"
 
     private char[][] latchesMatrix;
     private int latchesMatrixSize = 0;
 
+    /**
+     Defines game matrix of @size
+     and fill it with random values
+     */
     public FridgeGame(int size)
     {
         latchesMatrixSize = size;
@@ -40,7 +45,9 @@ public class FridgeGame
             }
         }
     }
-
+    /**
+     Defines game matrix based on input parameter @latches
+     */
     public FridgeGame(char[][] latches)
     {
         latchesMatrixSize = latches.length;
@@ -48,98 +55,122 @@ public class FridgeGame
         latchesMatrix = latches;
     }
 
+
+    public char getLockedState()
+    {
+        return STATE_LOCKED;
+    }
+
+    public char getOpenedState()
+    {
+        return STATE_OPEN;
+    }
+
+    public char getUndefinedState()
+    {
+        return STATE_UNDEFINED;
+    }
+
+    public char[][] getLatchesMatrix()
+    {
+        return latchesMatrix;
+    }
     public int getLatchesMatrixSize()
     {
         return latchesMatrixSize;
     }
 
-    public boolean isLatchOpen(int row, int col)
-    {
-        return (latchesMatrix[row][col] == STATE_OPEN ? true:false);
-    }
-
     public void setLatchState(int row, int col, char state)
     {
-        if(row <= getLatchesMatrixSize() && col <= getLatchesMatrixSize() && (state == STATE_LOCKED || state == STATE_OPEN))
+        if(row < getLatchesMatrixSize() && col < getLatchesMatrixSize() && (state == getLockedState() || state == getOpenedState()))
         {
             latchesMatrix[row][col] = state;
         }
     }
 
-    private ArrayList<LockedList> getListOfLocked()
+    public char getLatchState(int row, int col)
     {
-        ArrayList<LockedList> lockedList = new ArrayList<LockedList>();
-        for (int row = 0; row < getLatchesMatrixSize(); row++)
+        try
         {
-            for (int col = 0; col < getLatchesMatrixSize(); col++)
+            if (!(row >= 0 && row < getLatchesMatrixSize() && col >= 0 && col < getLatchesMatrixSize()))
             {
-                if (!isLatchOpen(row, col))
+                throw new IndexOutOfBoundsException("Unable to locate state of matrix for row = " + row + " and col = " + col);
+            }
+            return latchesMatrix[row][col];
+        }
+        catch(IndexOutOfBoundsException e)
+        {
+            System.out.println(e.getMessage());
+            return getUndefinedState();
+        }
+    }
+
+    private ArrayList<Latch> getListOfLatches(char state)
+    {
+        ArrayList<Latch> latchList = new ArrayList<Latch>();
+        if (state == getOpenedState() || state == getLockedState())
+        {
+            for (int row = 0; row < getLatchesMatrixSize(); row++)
+            {
+                for (int col = 0; col < getLatchesMatrixSize(); col++)
                 {
-                    lockedList.add(new LockedList(row, col));
+                    if (getLatchState(row, col) == state)
+                    {
+                        latchList.add(new Latch(row, col));
+                    }
                 }
             }
         }
-        //System.out.println(lockedList.size());
-        /*for (int idx = 0; idx < lockedList.size(); idx++)
+        return latchList;
+    }
+
+    public boolean isStateExists(char state)
+    {
+        if (state == getOpenedState() || state == getLockedState())
         {
-            System.out.println(lockedList.get(idx).lockedLatchPos);
+            return (getListOfLatches(state).size() > 0);
         }
-        */
-        return lockedList;
+        return false;
     }
 
-    public boolean isLockedExists()
-    {
-        return getListOfLocked().size() > 0 ? true:false;
-    }
 
-    public void switchLocked(boolean printresult)
+    public void switchLatchesWithState(char state, boolean printresult)
     {
-        ArrayList<LockedList> lockedList = getListOfLocked();
-
-        if (lockedList.size() > 0)
+        ArrayList<Latch> latchesList = getListOfLatches(state);
+        if (latchesList.size() > 0)
         {
-            int cnt = 0;
-            for (int lockidx = 0; lockidx < lockedList.size(); lockidx++)
+            int latchidx = 0;
+            while (latchidx < latchesList.size() && isStateExists(state))
             {
-                /*if (printresult)
-                {
-                    System.out.println("Switch " + lockedList.get(lockidx).lockedLatchPos);
-                }
-                */
-
-                doSwitch(lockedList.get(lockidx).lockedLatchRow, lockedList.get(lockidx).lockedLatchCol);
-                cnt++;
-
+                doSwitch(latchesList.get(latchidx).latchRow, latchesList.get(latchidx).latchCol);
+                latchidx++;
             }
             if (printresult)
             {
+                System.out.println(latchidx + " switched");
                 printFridgeState();
-                System.out.println(cnt + " switched");
             }
-
         }
     }
 
-
     public void invertLatchState(int row, int col)
     {
-        if(row <= getLatchesMatrixSize() && col <= getLatchesMatrixSize())
+        if(row < getLatchesMatrixSize() && col < getLatchesMatrixSize())
         {
-            if (isLatchOpen(row, col))
+            if (getLatchState(row, col) == getOpenedState())
             {
-                setLatchState(row, col, STATE_LOCKED);
+                setLatchState(row, col, getLockedState());
             }
             else
             {
-                setLatchState(row, col, STATE_OPEN);
+                setLatchState(row, col, getOpenedState());
             }
         }
 
     }
     public void doSwitch(int latchRow, int latchCol)
     {
-        if(latchRow <= getLatchesMatrixSize() && latchCol <= getLatchesMatrixSize())
+        if(latchRow < getLatchesMatrixSize() && latchCol < getLatchesMatrixSize())
         {
             invertLatchState(latchRow, latchCol);
             for (int idx = 0; idx < getLatchesMatrixSize(); idx++)

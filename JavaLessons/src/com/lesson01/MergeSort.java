@@ -19,23 +19,23 @@ public class MergeSort
         aux  = new int[arraysize];
     }
 
-    public void sort()
+    public void sort(boolean invertdirection)
     {
-        sortMerge(0, arraysize - 1);
+        sortMerge(0, arraysize - 1, invertdirection);
     }
 
-    private void sortMerge(int low, int high)
+    private void sortMerge(int low, int high, boolean invertdirection)
     {
         if (low < high)
         {
             int middle = low + (high - low) / 2;
-            sortMerge(low, middle);
-            sortMerge(middle + 1, high);
-            merge(low, middle, high);
+            sortMerge(low, middle, invertdirection);
+            sortMerge(middle + 1, high, invertdirection);
+            merge(low, middle, high, invertdirection);
         }
     }
 
-    private void merge(int low, int middle, int high)
+    private void merge(int low, int middle, int high, boolean invertdirection)
     {
         System.arraycopy(unsorted, low, aux, low, high - low + 1);
         //System.out.println("-----------------------------------");
@@ -48,7 +48,7 @@ public class MergeSort
         {
             //System.out.println("Compare " + aux[i] + " and " + aux[j]);
 
-            if (aux[i] <= aux[j])
+            if ((invertdirection && aux[i] >= aux[j]) || (!invertdirection && aux[i] <= aux[j]))
             {
                 unsorted[k] = aux[i];
                 i++;

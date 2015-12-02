@@ -20,8 +20,10 @@ public class TestLesson01 {
     public static String[] teststr1x = new String[100];
     public static String[][] teststr2x = {{"1", "2", "3"}, {"4", "5", "6"}, {"7", "8", "9"}};
 
-    public static int[] testint1x = new int[1000000];
+    public static int[] testint1x = new int[10];
     public static int[][] testint2x = new int[3][3];
+
+    public static byte[] testbyte1x = {1, 2, 3, 4, 5};
 
     static
     {
@@ -120,12 +122,13 @@ public class TestLesson01 {
 
         //ArrayUtils.filterIntArrayByMutiplicity(testint1x, 2);
         //System.out.println(ArrayUtils.roundDouble(1236.98799999d, 3));
-        //System.out.println(Arrays.toString(testint1x));
-        MergeSort ms = new MergeSort(testint1x);
-        ms.sort();
-        //System.out.println(Arrays.toString(testint1x));
-        System.out.println(new Timestamp(new Date().getTime()));
 
+        //System.out.println(Arrays.toString(testint1x));
+        //MergeSort ms = new MergeSort(testint1x);
+        //ms.sort(true);
+        //System.out.println(Arrays.toString(testint1x));
+        //System.out.println(new Timestamp(new Date().getTime()));
 
+        System.out.println(ArrayUtils.isDuplicatesExists(testbyte1x));
     }
 }

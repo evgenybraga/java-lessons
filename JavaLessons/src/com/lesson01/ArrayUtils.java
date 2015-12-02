@@ -33,7 +33,7 @@ public class ArrayUtils {
         return acsiiarray;
     }
 
-    public static int[][] invertIntArraySign(int[][] arr)
+    public static void invertIntArraySign(int[][] arr)
     {
         int[][] invertarray = new int[arr.length][arr[0].length];
         for (int row = 0; row < arr.length; row++)
@@ -43,7 +43,6 @@ public class ArrayUtils {
                 invertarray[row][col] = -arr[row][col];
             }
         }
-        return invertarray;
     }
 
     public static int getMax(int first, int second)
@@ -71,9 +70,7 @@ public class ArrayUtils {
 
     public static boolean lookupCharArray(char[] data, char[] template)
     {
-        String datastr = charArrayToString(data);
-        String templatestr = charArrayToString(template);
-        return (datastr.indexOf(templatestr) != -1);
+        return charArrayToString(data).indexOf(charArrayToString(template)) != -1;
     }
 
     public static int lookupIntArray(int[] data, int template, boolean invertdirection)
@@ -104,7 +101,7 @@ public class ArrayUtils {
         {
             return 0;
          }
-        return (base == 0  ? 1 : base * getFactorial(base - 1));
+        return (base == 0 ? 1 : base * getFactorial(base - 1));
     }
 
     public static boolean isLeapYear(int year)
@@ -154,23 +151,28 @@ public class ArrayUtils {
         return Math.round(base * Math.pow(10, precision))/ Math.pow(10, precision);
     }
 
-    public static int[] sortArrayAsc(int[] data)
-    {
-     return data;
-    }
-
-    public static int[] sortArrayDesc(int[] data)
-    {
-        return data;
-    }
-
-    public static int[] sortArray(int[] data, boolean ascending)
-    {
-        return data;
-    }
-
     public static boolean isDuplicatesExists(byte[] data)
     {
+        int size = data.length;
+        switch (size)
+        {
+            case 0:return false;
+            case 1:return true;
+            default:
+            {
+                int[] dataint = new int[size];
+                MergeSort ms = new MergeSort(dataint);
+                System.arraycopy(data, 0, dataint, 0, size);
+                ms.sort(false);
+                for (int idx = 0; idx < size - 1; idx++)
+                {
+                    if (dataint[idx] ==  dataint[idx + 1])
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
