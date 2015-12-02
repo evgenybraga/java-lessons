@@ -23,7 +23,7 @@ public class TestLesson01 {
     public static int[] testint1x = new int[10];
     public static int[][] testint2x = new int[3][3];
 
-    public static byte[] testbyte1x = {1, 2, 3, 4, 5};
+    public static byte[] testbyte1x = {1, 2, 3, 4, 2};
 
     static
     {
@@ -129,6 +129,20 @@ public class TestLesson01 {
         //System.out.println(Arrays.toString(testint1x));
         //System.out.println(new Timestamp(new Date().getTime()));
 
-        System.out.println(ArrayUtils.isDuplicatesExists(testbyte1x));
+        //System.out.println(ArrayUtils.isDuplicatesExists(testbyte1x));
+        /*
+        System.out.println("Size = " + ArrayUtils.intToString(9));
+        System.out.println("Size = " + ArrayUtils.intToString(10));
+        System.out.println("Size = " + ArrayUtils.intToString(59));
+        System.out.println("Size = " + ArrayUtils.intToString(346));
+        System.out.println("Size = " + ArrayUtils.intToString(-2));
+        System.out.println("Size = " + ArrayUtils.intToString(-10));
+        System.out.println("Size = " + ArrayUtils.intToString(-99));
+        System.out.println("Size = " + ArrayUtils.intToString(-978));
+        System.out.println("Size = " + ArrayUtils.intToString(0));
+        */
+
+        System.out.println(ArrayUtils.intToString(-665686));
+
     }
 }

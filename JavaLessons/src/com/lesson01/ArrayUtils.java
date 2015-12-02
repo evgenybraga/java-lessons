@@ -161,8 +161,12 @@ public class ArrayUtils {
             default:
             {
                 int[] dataint = new int[size];
+                for (int idx = 0; idx < size; idx++)
+                {
+                    dataint[idx] =  data[idx];
+                }
                 MergeSort ms = new MergeSort(dataint);
-                System.arraycopy(data, 0, dataint, 0, size);
+                //System.arraycopy(data, 0, dataint, 0, size);
                 ms.sort(false);
                 for (int idx = 0; idx < size - 1; idx++)
                 {
@@ -176,5 +180,26 @@ public class ArrayUtils {
         return false;
     }
 
-
+    public static String intToString(int data)
+    {
+        int intLength = data < 0 ? 2:1;
+        int reminder = Math.abs(data);
+        char[] numRef = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        //System.out.println("Data = " + data);
+        while (reminder >= 10)
+        {
+            reminder = reminder / 10;
+            intLength++;
+        }
+        //System.out.println("Size =  " + intLength);
+        char[] intSplit = new char[intLength];
+        intSplit[0] = '-';
+        int absdata = Math.abs(data);
+        for (int intpos = (data < 0 ? 1:0); intpos < intLength ; intpos++)
+        {
+            intSplit[intLength - intpos] =
+            numRef[((absdata -  (absdata / (int)Math.pow(10, intpos)) * (int)Math.pow(10, intpos)))/(int)Math.pow(10, intpos-1)];
+        }
+        return new String(intSplit);
+    }
 }
