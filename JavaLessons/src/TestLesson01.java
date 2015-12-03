@@ -142,7 +142,7 @@ public class TestLesson01 {
         System.out.println("Size = " + ArrayUtils.intToString(0));
         */
 
-        System.out.println(ArrayUtils.intToString(-665686));
+        System.out.println(ArrayUtils.toString(-665686));
 
     }
 }

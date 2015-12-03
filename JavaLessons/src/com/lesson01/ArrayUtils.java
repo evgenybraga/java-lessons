@@ -3,92 +3,72 @@ package com.lesson01;
 /**
  * Created by ibraga on 24/11/2015.
  */
+
 import java.util.*;
 
 public class ArrayUtils {
 
-    public static void printCharArray(char[] arr)
-    {
-          System.out.println(Arrays.toString(arr));
+    public static void printArray(char[] arr) {
+        System.out.println(Arrays.toString(arr));
     }
 
-    public static void printStringArray(String[][] arr)
-    {
-        for (int row = 0; row < arr.length; row++)
-        {
+    public static void printArray(String[][] arr) {
+        for (int row = 0; row < arr.length; row++) {
             System.out.println(Arrays.toString(arr[row]));
         }
     }
 
-    public static char[][] decodeIntArrayToASCIICode(int[][] arr)
-    {
-        char [][] acsiiarray = new char[arr.length][arr[0].length];
-        for (int row = 0; row < arr.length; row++)
-        {
-            for (int col = 0; col < arr.length; col++)
-            {
-                acsiiarray[row][col] = (char)arr[row][col];
+
+    //{{1,2,3}, {1,2}}
+    public static char[][] decodeArrayToASCIICode(int[][] arr) {
+        char[][] acsiiarray = new char[arr.length][arr[0].length];
+        for (int row = 0; row < arr.length; row++) {
+            for (int col = 0; col < arr[0].length; col++) {
+                arr[row][col] = (char) arr[row][col];
             }
         }
         return acsiiarray;
     }
-
-    public static void invertIntArraySign(int[][] arr)
-    {
-        int[][] invertarray = new int[arr.length][arr[0].length];
-        for (int row = 0; row < arr.length; row++)
-        {
-            for (int col = 0; col < arr.length; col++)
-            {
-                invertarray[row][col] = -arr[row][col];
+    //{{1,2,3}, {1,2}}
+    public static void invertArraySign(int[][] arr) {
+        for (int row = 0; row < arr.length; row++) {
+            for (int col = 0; col < arr[0].length; col++) {
+                arr[row][col] = -arr[row][col];
             }
         }
     }
 
-    public static int getMax(int first, int second)
-    {
-        System.out.println("Execution 1-2");
-        return Math.max(first, second);
+    public static int max(int first, int second) {
+        return Math.max(first, second);// ternary
     }
 
-    public static int getMax(int first, int second, int third)
-    {
-        System.out.println("Execution 1-2-3");
+    public static int max(int first, int second, int third) {
         return Math.max(Math.max(first, second), third);
     }
 
-    public static int getMax(int first, int second, int third, int fourth, int fifth)
-    {
-        System.out.println("Execution 1-2-3-4-5");
-        return getMax(getMax(first, second, third), fourth, fifth);
+    public static int max(int first, int second, int third, int fourth, int fifth) {
+        return max(max(first, second, third), fourth, fifth);
     }
 
-    public static String charArrayToString(char[] arr)
-    {
+    public static String toString(char[] arr) {
         return new String(arr);
     }
 
-    public static boolean lookupCharArray(char[] data, char[] template)
-    {
-        return charArrayToString(data).indexOf(charArrayToString(template)) != -1;
+    public static boolean lookupArray(char[] data, char[] template) {
+        return toString(data).indexOf(toString(template)) != -1;
     }
 
-    public static int lookupIntArray(int[] data, int template, boolean invertdirection)
-    {
+    public static int lookupArray(int[] data, int template, boolean invertdirection) {
         int sz = data.length;
         int idx = (!invertdirection ? 0 : sz - 1);
         int incrementstep = (!invertdirection ? 1 : -1);
-        while (idx >= 0 && idx < sz)
-        {
-            if (data[idx] == template)
-            {
+        while (idx >= 0 && idx < sz) {
+            if (data[idx] == template) {
                 //System.out.println("Can not found at " + idx);
                 return idx;
-            }
-            else
-            {
+            } else {
                 //System.out.println(idx);
-                idx +=incrementstep;
+                idx += incrementstep;
             }
         }
         //System.out.println("Can not found " + template);
@@ -97,34 +77,27 @@ public class ArrayUtils {
 
     public static int getFactorial(int base)
     {
-        if (base < 0 ) //throw new IllegalArgumentException("Function argument base = " + base + " should be greater or equal to zero");// ????????? ??????????????
-        {
+        if (base < 0){
             return 0;
-         }
+        }
         return (base == 0 ? 1 : base * getFactorial(base - 1));
     }
 
-    public static boolean isLeapYear(int year)
-    {
+    public static boolean isLeapYear(int year) {
 
-        if (year > 0)
-        {
-            return (year%4 == 0 && (year%100 != 0 || year%400 == 0));
+        if (year > 0) {
+            return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
         }
         return false;
     }
 
-    public static String[] filterStringArray(String[] data, String template)
-    {
+    public static String[] filterStringArray(String[] data, String template) {
         int sz = data.length;
         ArrayList<String> outlist = new ArrayList<String>();
-        if (sz > 0)
-        {
+        if (sz > 0) {
 
-            for (int row = 0; row < sz; row++)
-            {
-                if (data[row].indexOf(template) != -1)
-                {
+            for (int row = 0; row < sz; row++) {
+                if (data[row].contains(template)) {
                     outlist.add(data[row]);
                 }
             }
@@ -132,46 +105,38 @@ public class ArrayUtils {
         return outlist.toArray(new String[outlist.size()]);
     }
 
-    public static void filterIntArrayByMutiplicity(int[] data, int divisor)
-    {
-        if (data.length > 0  && divisor != 0)
-        {
-            for (int row = 0; row < data.length; row++)
-            {
-                if (data[row]%divisor == 0)
-                {
+    public static void filterArrayByMutiplicity(int[] data, int divisor) {
+        if (data.length > 0 && divisor != 0) {
+            for (int row = 0; row < data.length; row++) {
+                if (data[row] % divisor == 0) {
                     System.out.println(data[row]);
                 }
             }
         }
     }
 
-    public static double roundDouble(double base, int precision)
-    {
-        return Math.round(base * Math.pow(10, precision))/ Math.pow(10, precision);
+    public static double roundDouble(double base, int precision) {
+        return Math.round(base * Math.pow(10, precision)) / Math.pow(10, precision);
     }
 
-    public static boolean isDuplicatesExists(byte[] data)
-    {
+    // without sort, one loop, one additional array
+    public static boolean isDuplicatesExists(byte[] data) {
         int size = data.length;
-        switch (size)
-        {
-            case 0:return false;
-            case 1:return true;
-            default:
-            {
+        switch (size) {
+            case 0:
+                return false;
+            case 1:
+                return true;
+            default: {
                 int[] dataint = new int[size];
-                for (int idx = 0; idx < size; idx++)
-                {
-                    dataint[idx] =  data[idx];
+                for (int idx = 0; idx < size; idx++) {
+                    dataint[idx] = data[idx];
                 }
                 MergeSort ms = new MergeSort(dataint);
                 //System.arraycopy(data, 0, dataint, 0, size);
                 ms.sort(false);
-                for (int idx = 0; idx < size - 1; idx++)
-                {
-                    if (dataint[idx] ==  dataint[idx + 1])
-                    {
+                for (int idx = 0; idx < size - 1; idx++) {
+                    if (dataint[idx] == dataint[idx + 1]) {
                         return true;
                     }
                 }
@@ -180,14 +145,12 @@ public class ArrayUtils {
         return false;
     }
 
-    public static String intToString(int data)
-    {
-        int intLength = data < 0 ? 2:1;
+    public static String toString(int data) {
+        int intLength = data < 0 ? 2 : 1;
         int reminder = Math.abs(data);
         char[] numRef = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
         //System.out.println("Data = " + data);
-        while (reminder >= 10)
-        {
+        while (reminder >= 10) {
             reminder = reminder / 10;
             intLength++;
         }
@@ -195,10 +158,9 @@ public class ArrayUtils {
         char[] intSplit = new char[intLength];
         intSplit[0] = '-';
         int absdata = Math.abs(data);
-        for (int intpos = (data < 0 ? 1:0); intpos < intLength ; intpos++)
-        {
+        for (int intpos = (data < 0 ? 1 : 0); intpos < intLength; intpos++) {
             intSplit[intLength - intpos] =
-            numRef[((absdata -  (absdata / (int)Math.pow(10, intpos)) * (int)Math.pow(10, intpos)))/(int)Math.pow(10, intpos-1)];
+                    numRef[((absdata - (absdata / (int) Math.pow(10, intpos)) * (int) Math.pow(10, intpos))) / (int) Math.pow(10, intpos - 1)];
         }
         return new String(intSplit);
     }
