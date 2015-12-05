@@ -11,20 +11,32 @@ public class ArrayUtils {
     public static void printArray(char[] array) {
         System.out.print("[ ");
         for (int row = 0; row < array.length; row++){
-
             System.out.print(array[row]);
-            if (row < array.length - 1) {
-                System.out.print(", ");
+            if (row == array.length - 1) {
+
+                System.out.println(" ]");
+            }
+            else {
+            System.out.print(", ");
             }
         }
-        System.out.println(" ]");
-
     }
 
-    public static void printArray(String[][] arr) {
-        for (int row = 0; row < arr.length; row++) {
-            System.out.println(Arrays.toString(arr[row]));
-        }
+    public static void printArray(String[][] array) {
+        for (int row = 0; row < array.length; row++) {
+            System.out.print("[ ");
+            for (int column = 0; column < array[row].length; column++)
+            {
+                System.out.print(array[row][column]);
+                if (row == array.length - 1) {
+                        System.out.println(" ]");
+                }
+                else{
+                        System.out.print(", ");
+                    }
+                }
+            }
+        System.out.println();
     }
 
 
@@ -32,8 +44,8 @@ public class ArrayUtils {
     public static char[][] decodeArrayToASCIICode(int[][] arr) {
         char[][] acsiiarray = new char[arr.length][arr[0].length];
         for (int row = 0; row < arr.length; row++) {
-            for (int col = 0; col < arr[row].length; col++) {
-                arr[row][col] = (char) arr[row][col];
+            for (int column = 0; column < arr[row].length; column++) {
+                arr[row][column] = (char) arr[row][column];
             }
         }
         return acsiiarray;
