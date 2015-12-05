@@ -8,8 +8,17 @@ import java.util.*;
 
 public class ArrayUtils {
 
-    public static void printArray(char[] arr) {
-        System.out.println(Arrays.toString(arr));
+    public static void printArray(char[] array) {
+        System.out.print("[ ");
+        for (int row = 0; row < array.length; row++){
+
+            System.out.print(array[row]);
+            if (row < array.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println(" ]");
+
     }
 
     public static void printArray(String[][] arr) {
@@ -23,7 +32,7 @@ public class ArrayUtils {
     public static char[][] decodeArrayToASCIICode(int[][] arr) {
         char[][] acsiiarray = new char[arr.length][arr[0].length];
         for (int row = 0; row < arr.length; row++) {
-            for (int col = 0; col < arr[0].length; col++) {
+            for (int col = 0; col < arr[row].length; col++) {
                 arr[row][col] = (char) arr[row][col];
             }
         }
@@ -32,7 +41,7 @@ public class ArrayUtils {
     //{{1,2,3}, {1,2}}
     public static void invertArraySign(int[][] arr) {
         for (int row = 0; row < arr.length; row++) {
-            for (int col = 0; col < arr[0].length; col++) {
+            for (int col = 0; col < arr[row].length; col++) {
                 arr[row][col] = -arr[row][col];
             }
         }
