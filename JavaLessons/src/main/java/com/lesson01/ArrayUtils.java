@@ -4,17 +4,17 @@ package com.lesson01;
  * Created by ibraga on 24/11/2015.
  */
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class ArrayUtils {
 
-    public static void printArray(char[] array) {
-        System.out.print("[ ");
-        for (int row = 0; row < array.length; row++){
-            System.out.print(array[row]);
-            if (row == array.length - 1) {
-
-                System.out.println(" ]");
+    public static void printArray(char[] data) {
+        System.out.print("[");
+        for (int row = 0; row < data.length; row++){
+            System.out.print(data[row]);
+            if (row == data.length - 1) {
+                System.out.println("]");
             }
             else {
             System.out.print(", ");
@@ -22,111 +22,144 @@ public class ArrayUtils {
         }
     }
 
-    public static void printArray(String[][] array) {
-        for (int row = 0; row < array.length; row++) {
-            System.out.print("[ ");
-            for (int column = 0; column < array[row].length; column++)
+    public static void printArray(String[][] data) {
+
+        for (int row = 0; row < data.length; row++) {
+            System.out.print("[");
+            for (int column = 0; column < data[row].length; column++)
             {
-                System.out.print(array[row][column]);
-                if (row == array.length - 1) {
-                        System.out.println(" ]");
+                System.out.print(data[row][column]);
+                if (column == data[row].length - 1) {
+                        System.out.print("]");
                 }
                 else{
                         System.out.print(", ");
                     }
                 }
+            System.out.println();
             }
-        System.out.println();
     }
 
 
-    //{{1,2,3}, {1,2}}
-    public static char[][] decodeArrayToASCIICode(int[][] arr) {
-        char[][] acsiiarray = new char[arr.length][arr[0].length];
-        for (int row = 0; row < arr.length; row++) {
-            for (int column = 0; column < arr[row].length; column++) {
-                arr[row][column] = (char) arr[row][column];
+    public static char[][] decodeASCIIArray(int[][] asciiCodes) {
+        char[][] asciiChars = new char[asciiCodes.length][];
+        for (int row = 0; row < asciiCodes.length; row++) {
+            asciiChars[row] = new char [asciiCodes[row].length];
+            for (int column = 0; column < asciiCodes[row].length; column++) {
+                asciiChars[row][column] = (char)asciiCodes[row][column];
             }
         }
-        return acsiiarray;
+        return asciiChars;
     }
-    //{{1,2,3}, {1,2}}
-    public static void invertArraySign(int[][] arr) {
-        for (int row = 0; row < arr.length; row++) {
-            for (int col = 0; col < arr[row].length; col++) {
-                arr[row][col] = -arr[row][col];
+
+    public static void invertArraySign(int[][] data) {
+        for (int row = 0; row < data.length; row++) {
+            for (int column = 0; column < data[row].length; column++) {
+                data[row][column] = -data[row][column];
             }
         }
     }
 
     public static int max(int first, int second) {
-        return Math.max(first, second);// ternary
+        return (first > second ? first:second);
     }
 
     public static int max(int first, int second, int third) {
-        return Math.max(Math.max(first, second), third);
+        return max(max(first, second), third);
     }
 
     public static int max(int first, int second, int third, int fourth, int fifth) {
         return max(max(first, second, third), fourth, fifth);
     }
 
-    public static String toString(char[] arr) {
-        return new String(arr);
+    public static String toString(char[] data) {
+        return new String(data);
     }
 
-    public static boolean lookupArray(char[] data, char[] template) {
-        return toString(data).indexOf(toString(template)) != -1;
+    public static boolean containsArray(char[] data, char[] key) {
+        //Last position for start search
+        int endPosition = data.length - key.length + 1;
+        int startIndex = 0;
+        boolean found = false;
+        while (startIndex < endPosition){
+            for (int keyIndex = 0; keyIndex < key.length; keyIndex++){
+                //As only current character not equal to key character break inner loop
+                if (!(data[startIndex + keyIndex] == key[keyIndex])){
+                    startIndex++;
+                    found = false;
+                    break;
+                }
+                else {
+                    found = true;
+                }
+            }
+            //If after inner loop @found = true then exit
+            if (found) return found;
+        }
+        return false;
     }
 
-    public static int lookupArray(int[] data, int template, boolean invertdirection) {
-        int sz = data.length;
-        int idx = (!invertdirection ? 0 : sz - 1);
-        int incrementstep = (!invertdirection ? 1 : -1);
-        while (idx >= 0 && idx < sz) {
-            if (data[idx] == template) {
-                //System.out.println("Can not found at " + idx);
+    public static int indexOf(int[] data, int key) {
+        int size = data.length;
+        int idx = 0;
+
+        while (idx < size) {
+            if (data[idx] == key) {
                 return idx;
-            } else {
-                //System.out.println(idx);
-                idx += incrementstep;
+            }
+            else {
+                idx++;
             }
         }
-        //System.out.println("Can not found " + template);
         return -1;
     }
 
-    public static int getFactorial(int base)
+    public static int lastIndexOf(int[] data, int key) {
+        int size = data.length;
+        int dataIndex = size - 1;
+        while (dataIndex >= 0) {
+            if (data[dataIndex] == key) {return dataIndex;
+            }
+            else {
+                dataIndex--;
+            }
+        }
+        return -1;
+    }
+
+
+    public static int factorial(int base)
     {
         if (base < 0){
             return 0;
         }
-        return (base == 0 ? 1 : base * getFactorial(base - 1));
+        return (base == 0 ? 1 : base * factorial(base - 1));
     }
 
     public static boolean isLeapYear(int year) {
-
         if (year > 0) {
             return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
         }
         return false;
     }
 
-    public static String[] filterStringArray(String[] data, String template) {
-        int sz = data.length;
-        ArrayList<String> outlist = new ArrayList<String>();
-        if (sz > 0) {
-
-            for (int row = 0; row < sz; row++) {
-                if (data[row].contains(template)) {
-                    outlist.add(data[row]);
-                }
+    public static String[] filterArray(String[] data, String template) {
+        String [] outDataUncut = new String [data.length];
+        int outDataIdx = 0;
+        if (data.length > 0) {
+            for (String row : data) {
+               if (row.contains(template)){
+                   outDataUncut[outDataIdx] = row;
+                   outDataIdx++;
+               }
             }
         }
-        return outlist.toArray(new String[outlist.size()]);
+        String [] outDataCut = new String[outDataIdx];
+        System.arraycopy(outDataUncut, 0, outDataCut, 0, outDataCut.length);
+        return outDataCut;
     }
 
-    public static void filterArrayByMutiplicity(int[] data, int divisor) {
+    public static void printMultiples(int[] data, int divisor) {
         if (data.length > 0 && divisor != 0) {
             for (int row = 0; row < data.length; row++) {
                 if (data[row] % divisor == 0) {
@@ -136,7 +169,7 @@ public class ArrayUtils {
         }
     }
 
-    public static double roundDouble(double base, int precision) {
+    public static double round(double base, int precision) {
         return Math.round(base * Math.pow(10, precision)) / Math.pow(10, precision);
     }
 

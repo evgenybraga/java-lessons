@@ -15,16 +15,17 @@ public class TestLesson01 {
     //public static char[] tmplchar = new char[39500];
 
     public static char[] testchar1x = {'1', '2', '3', '4', '5', '6', '7'};
-    public static char[] tmplchar = {'6', '7'};
+    public static char[] tmplchar = {'1', '2', '3', '%', '5', '6', '7'};
 
-    public static String[] teststr1x = new String[100];
-    public static String[][] teststr2x = {{"1", "2"}, {"4", "5"}, {"7", "8"}};
+    public static String[] teststr1x = {"3", "4", "3", "4", "5", "4", "7"};
+    public static String[][] teststr2x = {{"1", "2", "3", "4"}, {"5", "6"}, {"7", "8", "9"}};
 
-    public static int[] testint1x = new int[10];
-    public static int[][] testint2x = new int[3][2];
+    public static int[] testint1x = {1, 2, 3, 4, 4, 3, 2, 1};
+    public static int[][] testint2x = {{65, 66},{67, 68, 69},{70, 71}};
 
     public static byte[] testbyte1x = {1, 2, 3, 4, 2};
 
+    /*
     static
     {
         Random random = new Random();
@@ -66,41 +67,49 @@ public class TestLesson01 {
         }
 
     }
-
+*/
     public static void main(String[] args) {
         System.out.println(new Timestamp(new Date().getTime()));
-
+/*
         ArrayUtils.printArray(testchar1x);
         ArrayUtils.printArray(teststr2x);
-/*
+        char[][] ascii = {{'0', '0'}, {'0', '0', '0'}, {'0', '0'}};
+
+        ascii = ArrayUtils.decodeASCIIArray(testint2x);
+
+        for (int i = 0; i < testint2x.length; i++)
+        {
+            System.out.println(Arrays.toString(ascii[i]));
+        }
+
+
         for (int i = 0; i < testint2x.length; i++)
         {
             System.out.println(Arrays.toString(testint2x[i]));
         }
-        System.out.println();
+
+        ArrayUtils.invertArraySign(testint2x);
+
         for (int i = 0; i < testint2x.length; i++)
         {
-            System.out.println(Arrays.toString(ArrayUtils.invertIntArraySign(testint2x)[i]));
+            System.out.println(Arrays.toString(testint2x[i]));
         }
+*/
+        //System.out.println(ArrayUtils.max(5, 4, 3, 2, 1));
 
-        ArrayUtils.invertIntArraySign(testint2x);
-        */
-        //System.out.println(ArrayUtils.getMax(5, 4, 3, 2, 1));
-        //System.out.println(ArrayUtils.charArrayToString(testchar1x));
-        //System.out.println(ArrayUtils.lookupCharArray(testchar1x, tmplchar));
-        //System.out.println(Arrays.toString(testchar1x));
-        //System.out.println(Arrays.toString(tmplchar));
+        //System.out.println(ArrayUtils.toString(testchar1x));
 
+        //System.out.println(ArrayUtils.containsArray(testchar1x, tmplchar));
 
-        //System.out.println(ar.lookupCharArray(testchar1x, tmplchar));
         /*
-        ArrayUtils.lookupIntArray(testint1x, 1, false);
-        ArrayUtils.lookupIntArray(testint1x, 1, true);
-        ArrayUtils.lookupIntArray(testint1x, 10, false);
-        ArrayUtils.lookupIntArray(testint1x, 10, true);
-        ArrayUtils.lookupIntArray(testint1x, 2, false);
-        ArrayUtils.lookupIntArray(testint1x, 2, true);
+        System.out.println(ArrayUtils.indexOf(testint1x, 1));
+        System.out.println(ArrayUtils.indexOf(testint1x, 4));
+        System.out.println(ArrayUtils.indexOf(testint1x, -1));
+        System.out.println(ArrayUtils.lastIndexOf(testint1x, 1));
+        System.out.println(ArrayUtils.lastIndexOf(testint1x, 4));
+        System.out.println(ArrayUtils.lastIndexOf(testint1x, -1));
         */
+
         /*
         for (int i = 1970; i < 2020; i++)
         {
@@ -110,10 +119,10 @@ public class TestLesson01 {
         */
 
 
-        /*
+
         System.out.println(Arrays.toString(teststr1x));
-        System.out.println(Arrays.toString(ArrayUtils.filterStringArray(teststr1x, "4")));
-        */
+        System.out.println(Arrays.toString(ArrayUtils.filterArray(teststr1x, "4")));
+
 
 
         //ArrayUtils.filterIntArrayByMutiplicity(testint1x, 2);

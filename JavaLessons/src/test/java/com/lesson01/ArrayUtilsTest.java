@@ -4,6 +4,7 @@ import org.junit.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -17,7 +18,9 @@ public class ArrayUtilsTest {
 
     private final static char[] charArray = {'1', '2', '3', '4', '5', '6', '7'};
     private final static String[] stringArray1d = {"1", "2", "3", "4", "5", "6"};
-    private final static String[][] stringArray2d = {{"1", "2"}, {"3", "4"}, {"5", "6"}};
+    private final static String[][] stringArray2d = {{"1", "2", "3"}, {"4", "5"}, {"6", "7", "8", "9", "10"}};
+    public static int[]intArray1d = {65, 66, 67, 68, 69, 70, 71};
+    public static int[][] intArray2d = {{65, 66},{67, 68, 69},{70, 71}};
     @Before
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
@@ -33,38 +36,52 @@ public class ArrayUtilsTest {
     @Test
     public void testPrintArray1d() throws Exception {
         ArrayUtils.printArray(charArray);
-        assertEquals("[ 1, 2, 3, 4, 5, 6, 7 ]\r\n", outContent.toString());
+        assertEquals("[1, 2, 3, 4, 5, 6, 7]\r\n", outContent.toString());
     }
 
     @Test
     public void testPrintArray2d() throws Exception {
         ArrayUtils.printArray(stringArray2d);
-        assertEquals("123456\r\n", outContent.toString());
+        assertEquals("[1, 2, 3]\r\n[4, 5]\r\n[6, 7, 8, 9, 10]\r\n", outContent.toString());
     }
 
     @Test
-    public void testDecodeArrayToASCIICode() throws Exception {
-
+    public void testDecodeASCIIArray() throws Exception {
+        char[][] result;
+        char[][] expected = {{'A', 'B'}, {'C', 'D', 'E'}, {'F', 'G'}};
+        result = ArrayUtils.decodeASCIIArray(intArray2d);
+        assertArrayEquals(expected, result);
     }
 
     @Test
     public void testInvertArraySign() throws Exception {
-
+        int[][] expected = {{-65, -66}, {-67, -68, -69}, {-70, -71}};
+        ArrayUtils.invertArraySign(intArray2d);
+        assertArrayEquals(expected, intArray2d);
     }
 
     @Test
     public void testMax() throws Exception {
-
+        assertEquals(0,  ArrayUtils.max(0, 0));
+        assertEquals(-1, ArrayUtils.max(-2, -1));
+        assertEquals(1,  ArrayUtils.max(0, 1));
+        assertEquals(2,  ArrayUtils.max(1, 2));
     }
 
     @Test
-    public void testMax1() throws Exception {
-
+    public void testMaxThree() throws Exception {
+        assertEquals(1, ArrayUtils.max(-1, 0, 1));
+        assertEquals(0, ArrayUtils.max(-2, -1, 0));
+        assertEquals(3, ArrayUtils.max(1, 2, 3));
+        assertEquals(0, ArrayUtils.max(0, 0, 0));
     }
 
     @Test
-    public void testMax2() throws Exception {
-
+    public void testMaxFive() throws Exception {
+        assertEquals(1, ArrayUtils.max(-1, 0, 1, 1, -2));
+        assertEquals(0, ArrayUtils.max(-2, -1, -10, 0, 0));
+        assertEquals(3, ArrayUtils.max(1, 2, 3, 0, -11));
+        assertEquals(0, ArrayUtils.max(0, 0, 0, 0, 0));
     }
 
     @Test
@@ -73,17 +90,22 @@ public class ArrayUtilsTest {
     }
 
     @Test
-    public void testLookupArray() throws Exception {
+    public void testContainsArray() throws Exception {
 
     }
 
     @Test
-    public void testLookupArray1() throws Exception {
+    public void testIndexOf() throws Exception {
 
     }
 
     @Test
-    public void testGetFactorial() throws Exception {
+    public void testLastIndexOf() throws Exception {
+
+    }
+
+    @Test
+    public void testFactorial() throws Exception {
 
     }
 
