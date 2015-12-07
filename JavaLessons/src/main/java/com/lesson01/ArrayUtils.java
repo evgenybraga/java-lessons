@@ -5,6 +5,7 @@ package com.lesson01;
  */
 
 import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class ArrayUtils {
@@ -144,19 +145,13 @@ public class ArrayUtils {
     }
 
     public static String[] filterArray(String[] data, String template) {
-        String [] outDataUncut = new String [data.length];
-        int outDataIdx = 0;
-        if (data.length > 0) {
-            for (String row : data) {
-               if (row.contains(template)){
-                   outDataUncut[outDataIdx] = row;
-                   outDataIdx++;
-               }
+        ArrayList<String> filtered = new ArrayList<String>();
+        for (String row : data) {
+            if (row.contains(template)){
+                filtered.add(row);
             }
         }
-        String [] outDataCut = new String[outDataIdx];
-        System.arraycopy(outDataUncut, 0, outDataCut, 0, outDataCut.length);
-        return outDataCut;
+        return filtered.toArray(new String[filtered.size()]);
     }
 
     public static void printMultiples(int[] data, int divisor) {
@@ -169,53 +164,43 @@ public class ArrayUtils {
         }
     }
 
-    public static double round(double base, int precision) {
-        return Math.round(base * Math.pow(10, precision)) / Math.pow(10, precision);
+    public static void printRound(double base) {
+        System.out.println(String.format("%.3f", base));
     }
 
     // without sort, one loop, one additional array
     public static boolean isDuplicatesExists(byte[] data) {
-        int size = data.length;
-        switch (size) {
-            case 0:
-                return false;
-            case 1:
+        HashSet unique = new HashSet();
+        for (byte row : data){
+            if (!unique.add(row))
+            {
                 return true;
-            default: {
-                int[] dataint = new int[size];
-                for (int idx = 0; idx < size; idx++) {
-                    dataint[idx] = data[idx];
-                }
-                MergeSort ms = new MergeSort(dataint);
-                //System.arraycopy(data, 0, dataint, 0, size);
-                ms.sort(false);
-                for (int idx = 0; idx < size - 1; idx++) {
-                    if (dataint[idx] == dataint[idx + 1]) {
-                        return true;
-                    }
-                }
             }
         }
         return false;
     }
 
     public static String toString(int data) {
-        int intLength = data < 0 ? 2 : 1;
-        int reminder = Math.abs(data);
-        char[] numRef = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-        //System.out.println("Data = " + data);
-        while (reminder >= 10) {
-            reminder = reminder / 10;
-            intLength++;
+        int length = data < 0 ? 2 : 1;
+        int rank = Math.abs(data);
+        char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        while (rank >= 10) {
+            rank = rank / 10;
+            length++;
         }
-        //System.out.println("Size =  " + intLength);
-        char[] intSplit = new char[intLength];
-        intSplit[0] = '-';
-        int absdata = Math.abs(data);
-        for (int intpos = (data < 0 ? 1 : 0); intpos < intLength; intpos++) {
-            intSplit[intLength - intpos] =
-                    numRef[((absdata - (absdata / (int) Math.pow(10, intpos)) * (int) Math.pow(10, intpos))) / (int) Math.pow(10, intpos - 1)];
+        char[] out = new char[length];
+
+        out[0] = (data == 0 ? '0':'-');
+
+        int dataUnsigned = Math.abs(data);
+        int digit = 0;
+        //int position = length - 1;
+        while(dataUnsigned > 0) {
+            length--;
+            digit = dataUnsigned % 10;
+            dataUnsigned /= 10;
+            out[length] = numbers[digit];
         }
-        return new String(intSplit);
+        return new String(out);
     }
 }

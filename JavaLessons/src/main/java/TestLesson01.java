@@ -23,7 +23,7 @@ public class TestLesson01 {
     public static int[] testint1x = {1, 2, 3, 4, 4, 3, 2, 1};
     public static int[][] testint2x = {{65, 66},{67, 68, 69},{70, 71}};
 
-    public static byte[] testbyte1x = {1, 2, 3, 4, 2};
+    public static byte[] testbyte1x = {1, 2, 3, 4, 5};
 
     /*
     static
@@ -120,13 +120,13 @@ public class TestLesson01 {
 
 
 
-        System.out.println(Arrays.toString(teststr1x));
-        System.out.println(Arrays.toString(ArrayUtils.filterArray(teststr1x, "4")));
+        //System.out.println(Arrays.toString(teststr1x));
+        //System.out.println(Arrays.toString(ArrayUtils.filterArray(teststr1x, "4")));
 
 
 
-        //ArrayUtils.filterIntArrayByMutiplicity(testint1x, 2);
-        //System.out.println(ArrayUtils.roundDouble(1236.98799999d, 3));
+        //ArrayUtils.printMultiples(testint1x, 3);
+        ArrayUtils.printRound(1236.554545456);
 
         //System.out.println(Arrays.toString(testint1x));
         //MergeSort ms = new MergeSort(testint1x);
@@ -136,16 +136,16 @@ public class TestLesson01 {
 
         //System.out.println(ArrayUtils.isDuplicatesExists(testbyte1x));
         /*
-        System.out.println("Size = " + ArrayUtils.intToString(9));
-        System.out.println("Size = " + ArrayUtils.intToString(10));
-        System.out.println("Size = " + ArrayUtils.intToString(59));
-        System.out.println("Size = " + ArrayUtils.intToString(346));
-        System.out.println("Size = " + ArrayUtils.intToString(-2));
-        System.out.println("Size = " + ArrayUtils.intToString(-10));
-        System.out.println("Size = " + ArrayUtils.intToString(-99));
-        System.out.println("Size = " + ArrayUtils.intToString(-978));
-        System.out.println("Size = " + ArrayUtils.intToString(0));
+        System.out.println("Size = " + ArrayUtils.toString(-952));
+        System.out.println("Size = " + ArrayUtils.toString(-1));
+        System.out.println("Size = " + ArrayUtils.toString(0));
+        System.out.println("Size = " + ArrayUtils.toString(-0));
+        System.out.println("Size = " + ArrayUtils.toString(1));
+        System.out.println("Size = " + ArrayUtils.toString(952));
         */
+
+
+
 
         //System.out.println(ArrayUtils.toString(-665686));
 

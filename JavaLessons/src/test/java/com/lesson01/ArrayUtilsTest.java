@@ -120,13 +120,15 @@ public class ArrayUtilsTest {
     }
 
     @Test
-    public void testFilterArrayByMutiplicity() throws Exception {
-
+    public void testPrintMultiples() throws Exception {
+        ArrayUtils.printMultiples(intArray1d, 3);
+        assertEquals("66\r\n69\r\n", outContent.toString());
     }
 
     @Test
-    public void testRoundDouble() throws Exception {
-
+    public void testPrintRound() throws Exception {
+        ArrayUtils.printRound(1236.554545456);
+        assertEquals("1236.555\r\n", outContent.toString());
     }
 
     @Test
@@ -135,7 +137,12 @@ public class ArrayUtilsTest {
     }
 
     @Test
-    public void testToString1() throws Exception {
-
+    public void testToString2() throws Exception {
+        assertEquals("-6843", ArrayUtils.toString(-6843));
+        assertEquals("-1", ArrayUtils.toString(-1));
+        assertEquals("0", ArrayUtils.toString(-0));
+        assertEquals("0", ArrayUtils.toString(0));
+        assertEquals("1", ArrayUtils.toString(1));
+        assertEquals("9871", ArrayUtils.toString(9871));
     }
 }
