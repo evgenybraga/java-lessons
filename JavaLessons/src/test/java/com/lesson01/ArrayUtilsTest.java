@@ -86,27 +86,38 @@ public class ArrayUtilsTest {
 
     @Test
     public void testToString() throws Exception {
-
+        assertEquals("1234567", ArrayUtils.toString(charArray));
     }
 
     @Test
     public void testContainsArray() throws Exception {
+        assertEquals(true, ArrayUtils.containsArray(charArray, charArray));
+        assertEquals(true, ArrayUtils.containsArray(charArray, new char[]{'1'}));
+        assertEquals(false, ArrayUtils.containsArray(charArray, new char[]{'2', '3', '4', '9'}));
 
     }
 
     @Test
     public void testIndexOf() throws Exception {
-
+        assertEquals(3, ArrayUtils.indexOf(intArray1d, 68));
+        assertEquals(-1, ArrayUtils.indexOf(intArray1d, 0));
+        assertEquals(-1, ArrayUtils.indexOf(intArray1d, -10));
     }
 
     @Test
     public void testLastIndexOf() throws Exception {
-
+        assertEquals(3, ArrayUtils.lastIndexOf(intArray1d, 68));
+        assertEquals(-1, ArrayUtils.lastIndexOf(intArray1d, 0));
+        assertEquals(-1, ArrayUtils.lastIndexOf(intArray1d, -10));
     }
 
     @Test
     public void testFactorial() throws Exception {
-
+        assertEquals(0, ArrayUtils.factorial(-1));
+        assertEquals(1, ArrayUtils.factorial(0));
+        assertEquals(1, ArrayUtils.factorial(1));
+        assertEquals(2, ArrayUtils.factorial(2));
+        assertEquals(6, ArrayUtils.factorial(3));
     }
 
     @Test
