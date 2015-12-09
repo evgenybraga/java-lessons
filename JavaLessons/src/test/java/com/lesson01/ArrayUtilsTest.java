@@ -138,8 +138,8 @@ public class ArrayUtilsTest {
 
     @Test
     public void testPrintRound() throws Exception {
-        ArrayUtils.printRound(1236.554545456);
-        assertEquals("1236.555\r\n", outContent.toString());
+        ArrayUtils.printRound(123456789.554545456);
+        assertEquals(String.format("%.3f%n",(double)123456789.554545456), outContent.toString());
     }
 
     @Test
