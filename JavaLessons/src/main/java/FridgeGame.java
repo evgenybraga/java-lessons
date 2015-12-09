@@ -4,118 +4,103 @@ import java.util.Random;
 /**
  * Created by ibraga on 30/11/2015.
  */
-public class FridgeGame
-{
-    private class Latch
-    {
+public class FridgeGame {
+    private class Latch {
         final int latchRow;
         final int latchCol;
         final String latchPosition;
 
-        Latch(int row, int col)
-        {
+        Latch(int row, int col) {
             this.latchRow = row;
             this.latchCol = col;
             this.latchPosition = "row = " + row + "; col = " + col;
         }
     }
 
-    private final static char STATE_OPEN = (char)8212;  //"—"
-    private final static char STATE_LOCKED = (char)124; //"|"
-    private final static char STATE_UNDEFINED = (char)0; //"|"
+    private final static char STATE_OPEN = (char) 8212;  //"—"
+    private final static char STATE_LOCKED = (char) 124; //"|"
+    private final static char STATE_UNDEFINED = (char) 0; //"|"
 
     private char[][] latchesMatrix;
     private int latchesMatrixSize = 0;
 
     /**
-     Defines game matrix of @size
-     and fill it with random values
+     * Defines game matrix of @size
+     * and fill it with random values
      */
-    public FridgeGame(int size)
-    {
+    public FridgeGame(int size) {
         latchesMatrixSize = size;
         latchesMatrix = new char[size][size];
         Random random = new Random();
-
-        for (int row = 0; row < size; row++)
-        {
-            for (int col = 0; col < size; col++)
-            {
-                latchesMatrix[row][col] = (random.nextInt(2) == 1 ? STATE_OPEN:STATE_LOCKED);
+        //Fill matrix with all opened latches
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                //latchesMatrix[row][col] = (random.nextInt(2) == 1 ? STATE_OPEN:STATE_LOCKED);
+                latchesMatrix[row][col] = STATE_OPEN;
             }
         }
+        // Start tangle matrix
+        for (int row = 0; row < size; row++){
+            this.invertLatchState(random.nextInt(size), random.nextInt(size));
+            System.out.println(random.nextInt(size) + " " + random.nextInt(size));
+        }
+
     }
+
     /**
-     Defines game matrix based on input parameter @latches
+     * Defines game matrix based on input parameter @latches
      */
-    public FridgeGame(char[][] latches)
-    {
+    public FridgeGame(char[][] latches) {
         latchesMatrixSize = latches.length;
         latchesMatrix = new char[latchesMatrixSize][latchesMatrixSize];
         latchesMatrix = latches;
     }
 
 
-    public char getLockedState()
-    {
+    public char getLockedState() {
         return STATE_LOCKED;
     }
 
-    public char getOpenedState()
-    {
+    public char getOpenedState() {
         return STATE_OPEN;
     }
 
-    public char getUndefinedState()
-    {
+    public char getUndefinedState() {
         return STATE_UNDEFINED;
     }
 
-    public char[][] getLatchesMatrix()
-    {
+    public char[][] getLatchesMatrix() {
         return latchesMatrix;
     }
-    public int getLatchesMatrixSize()
-    {
+
+    public int getLatchesMatrixSize() {
         return latchesMatrixSize;
     }
 
-    public void setLatchState(int row, int col, char state)
-    {
-        if(row < getLatchesMatrixSize() && col < getLatchesMatrixSize() && (state == getLockedState() || state == getOpenedState()))
-        {
+    public void setLatchState(int row, int col, char state) {
+        if (row < getLatchesMatrixSize() && col < getLatchesMatrixSize() && (state == getLockedState() || state == getOpenedState())) {
             latchesMatrix[row][col] = state;
         }
     }
 
-    public char getLatchState(int row, int col)
-    {
-        try
-        {
-            if (!(row >= 0 && row < getLatchesMatrixSize() && col >= 0 && col < getLatchesMatrixSize()))
-            {
+    public char getLatchState(int row, int col) {
+        try {
+            if (!(row >= 0 && row < getLatchesMatrixSize() && col >= 0 && col < getLatchesMatrixSize())) {
                 throw new IndexOutOfBoundsException("Unable to locate state of matrix for row = " + row + " and col = " + col);
             }
             return latchesMatrix[row][col];
-        }
-        catch(IndexOutOfBoundsException e)
-        {
+        } catch (IndexOutOfBoundsException e) {
             System.out.println(e.getMessage());
             return getUndefinedState();
         }
     }
 
-    private ArrayList<Latch> getListOfLatches(char state)
-    {
+    private ArrayList<Latch> getListOfLatches(char state) {
         ArrayList<Latch> latchList = new ArrayList<Latch>();
-        if (state == getOpenedState() || state == getLockedState())
-        {
-            for (int row = 0; row < getLatchesMatrixSize(); row++)
-            {
-                for (int col = 0; col < getLatchesMatrixSize(); col++)
-                {
-                    if (getLatchState(row, col) == state)
-                    {
+        if (state == getOpenedState() || state == getLockedState()) {
+            for (int row = 0; row < getLatchesMatrixSize(); row++) {
+                for (int col = 0; col < getLatchesMatrixSize(); col++) {
+                    if (getLatchState(row, col) == state) {
                         latchList.add(new Latch(row, col));
                     }
                 }
@@ -124,78 +109,65 @@ public class FridgeGame
         return latchList;
     }
 
-    public boolean isStateExists(char state)
-    {
-        if (state == getOpenedState() || state == getLockedState())
-        {
+    public boolean isStateExists(char state) {
+        if (state == getOpenedState() || state == getLockedState()) {
             return (getListOfLatches(state).size() > 0);
         }
         return false;
     }
 
-
-    public void switchLatchesWithState(char state, boolean printresult)
-    {
+    /**
+     * Switch all latches in matrix of specified state
+     * Also exists conditional print of result
+     * @param state
+     * @param printResult
+     */
+    public void switchState(char state, boolean printResult) {
         ArrayList<Latch> latchesList = getListOfLatches(state);
-        if (latchesList.size() > 0)
-        {
-            int latchidx = 0;
-            while (latchidx < latchesList.size() && isStateExists(state))
-            {
-                doSwitch(latchesList.get(latchidx).latchRow, latchesList.get(latchidx).latchCol);
-                latchidx++;
+        if (latchesList.size() > 0) {
+            int latchId = 0;
+            while (latchId < latchesList.size() && isStateExists(state)) {
+                doSwitch(latchesList.get(latchId).latchRow, latchesList.get(latchId).latchCol);
+                latchId++;
             }
-            if (printresult)
-            {
-                System.out.println(latchidx + " switched");
+            if (printResult) {
+                System.out.println(latchId + " switched");
                 printFridgeState();
             }
         }
     }
 
-    public void invertLatchState(int row, int col)
-    {
-        if(row < getLatchesMatrixSize() && col < getLatchesMatrixSize())
-        {
-            if (getLatchState(row, col) == getOpenedState())
-            {
+    public void invertLatchState(int row, int col) {
+        if (row < getLatchesMatrixSize() && col < getLatchesMatrixSize()) {
+            if (getLatchState(row, col) == getOpenedState()) {
                 setLatchState(row, col, getLockedState());
-            }
-            else
-            {
+            } else {
                 setLatchState(row, col, getOpenedState());
             }
         }
 
     }
-    public void doSwitch(int latchRow, int latchCol)
-    {
-        if(latchRow < getLatchesMatrixSize() && latchCol < getLatchesMatrixSize())
-        {
+
+    public void doSwitch(int latchRow, int latchCol) {
+        if (latchRow < getLatchesMatrixSize() && latchCol < getLatchesMatrixSize()) {
             invertLatchState(latchRow, latchCol);
-            for (int idx = 0; idx < getLatchesMatrixSize(); idx++)
-            {
-                if (idx != latchRow)
-                {
+            for (int idx = 0; idx < getLatchesMatrixSize(); idx++) {
+                if (idx != latchRow) {
                     invertLatchState(idx, latchCol);
                 }
 
-                if (idx != latchCol)
-                {
+                if (idx != latchCol) {
                     invertLatchState(latchRow, idx);
                 }
             }
         }
     }
 
-    public void printFridgeState()
-    {
+    public void printFridgeState() {
         System.out.println("----------------------");
-        for (int row = 0; row < getLatchesMatrixSize(); row++)
-        {
+        for (int row = 0; row < getLatchesMatrixSize(); row++) {
             System.out.print("[ ");
-            for (int col = 0; col < getLatchesMatrixSize(); col++)
-            {
+            for (int col = 0; col < getLatchesMatrixSize(); col++) {
                 System.out.print(latchesMatrix[row][col] + " ");
             }
             System.out.println("]");
@@ -203,5 +175,11 @@ public class FridgeGame
         System.out.println("----------------------");
     }
 
+    /**
+     *
+     */
+    public void solve1(){
+        ArrayList<Latch> latchesList = getListOfLatches(getLockedState());
 
+    }
 }
