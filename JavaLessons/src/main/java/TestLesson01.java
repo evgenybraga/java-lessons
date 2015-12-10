@@ -126,7 +126,7 @@ public class TestLesson01 {
 
 
         //ArrayUtils.printMultiples(testint1x, 3);
-        ArrayUtils.printRound(1236.554545456);
+        ArrayUtils.printRound(123456789.554545456);
 
         //System.out.println(Arrays.toString(testint1x));
         //MergeSort ms = new MergeSort(testint1x);
