@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -41,8 +42,7 @@ public class FridgeGame {
         }
         // Start tangle matrix
         for (int row = 0; row < size; row++) {
-            this.invertLatchState(random.nextInt(size), random.nextInt(size));
-            System.out.println(random.nextInt(size) + " " + random.nextInt(size));
+            doSwitch(random.nextInt(size), random.nextInt(size));
         }
 
     }
@@ -156,12 +156,23 @@ public class FridgeGame {
                 if (idx != latchRow) {
                     invertLatchState(idx, latchCol);
                 }
-
                 if (idx != latchCol) {
                     invertLatchState(latchRow, idx);
                 }
             }
         }
+
+    }
+
+    public void doSwitch(ArrayList<Latch> latch) {
+        int switches = 0;
+        for (Latch element : latch){
+            doSwitch(element.latchRow, element.latchCol);
+            System.out.println("Switching " + element.latchPosition);
+            //printFridgeState();
+            switches++;
+        }
+        System.out.println("Switched amount = "  + switches);
     }
 
     public void printFridgeState() {
@@ -202,13 +213,16 @@ public class FridgeGame {
     /**
      *
      */
-    public void getListToSwitch() {
+    public ArrayList<Latch> getListToSwitch() {
         ArrayList<Latch> latchLocked = getListOfLatches(getLockedState());
+        ArrayList<Latch> latchToSwitch = new ArrayList<Latch>(0);
         for (Latch locked : latchLocked) {
             if (sameStateCount(locked.latchRow, locked.latchCol) % 2 != 0) {
-                System.out.println(locked.latchPosition + "; " + sameStateCount(locked.latchRow, locked.latchCol));
+                latchToSwitch.add(locked);
+                //System.out.println(locked.latchPosition + "; " + sameStateCount(locked.latchRow, locked.latchCol));
             }
         }
+        return latchToSwitch;
     }
 
 }
