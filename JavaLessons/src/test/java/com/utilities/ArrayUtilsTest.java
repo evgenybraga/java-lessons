@@ -1,10 +1,9 @@
-package com.lesson01;
+package com.utilities;
 
 import org.junit.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 

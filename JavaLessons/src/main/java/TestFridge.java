@@ -1,3 +1,5 @@
+import com.fridge.FridgeGame;
+
 import java.util.Scanner;
 
 /**
@@ -8,25 +10,17 @@ public class TestFridge {
 
         final char op = (char) 8212;  //"—"
         final char cl = (char) 124; //"|"
-        char[][] fr =
-/*
-                    {{cl, cl, cl, cl},
-                     {op, cl, op, op},
-                     {op, cl, op, op},
-                     {op, cl, op, op},
-*/
-                       {{cl, cl, cl, op},
-                        {op, cl, op, cl},
-                        {op, cl, op, cl},
-                        {cl, op, cl, cl},
-                };
+        int[][] fr = {{0, 0, 0, 0},
+                      {1, 1, 1, 0},
+                      {0, 0, 0, 0},
+                      {1, 1, 1, 0}};
 
         Scanner in = new Scanner(System.in);
         int row = 0;
         int col = 0;
         int cnt = 0;
-        FridgeGame game = new FridgeGame(4);
-        //FridgeGame game = new FridgeGame(fr);
+        //FridgeGame game = new FridgeGame(4);
+        FridgeGame game = new FridgeGame(fr);
         //System.out.println("Base state");
         game.printFridgeState();
 
@@ -44,10 +38,11 @@ public class TestFridge {
         }
 */
 
-        while (cnt < 5 && game.isStateExists(game.getLockedState()))
+        while (cnt < 2 && game.isStateExists(FridgeGame.State.locked))
         {
             //game.switchState(game.getLockedState(), true);
             game.doSwitch(game.getListToSwitch());
+            game.switchState(FridgeGame.State.locked, false);
             System.out.print("");
             cnt++;
         }

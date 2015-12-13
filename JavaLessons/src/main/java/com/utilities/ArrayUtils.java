@@ -1,12 +1,9 @@
-package com.lesson01;
+package com.utilities;
 
 /**
  * Created by ibraga on 24/11/2015.
  */
 
-import java.lang.reflect.Array;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.*;
 
 public class ArrayUtils {

@@ -1,4 +1,4 @@
-package com.lesson01;
+package com.utilities;
 
 /**
  * Created by admin on 29.11.2015.

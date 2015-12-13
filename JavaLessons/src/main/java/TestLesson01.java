@@ -1,10 +1,8 @@
 /**
  * Created by ibraga on 24/11/2015.
  */
-import com.lesson01.*;
+import com.utilities.*;
 
-import java.util.Arrays;
-import java.util.Random;
 import java.util.Date;
 import java.sql.Timestamp;
 
