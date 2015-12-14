@@ -145,14 +145,4 @@ public class ArrayUtilsTest {
     public void testIsDuplicatesExists() throws Exception {
 
     }
-
-    @Test
-    public void testToString2() throws Exception {
-        assertEquals("-6843", ArrayUtils.toString(-6843));
-        assertEquals("-1", ArrayUtils.toString(-1));
-        assertEquals("0", ArrayUtils.toString(-0));
-        assertEquals("0", ArrayUtils.toString(0));
-        assertEquals("1", ArrayUtils.toString(1));
-        assertEquals("9871", ArrayUtils.toString(9871));
-    }
 }

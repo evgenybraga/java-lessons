@@ -223,7 +223,7 @@ public class FridgeGame {
         ArrayList<Latch> latchLocked = getLatchList(State.locked);
         ArrayList<Latch> latchToSwitch = new ArrayList<Latch>(0);
         for (Latch locked : latchLocked) {
-            if (sameStateCount(locked.row, locked.column) % 2 != 0) {
+            if ((sameStateCount(locked.row, locked.column) & 1) != 0) {
                 latchToSwitch.add(locked);
             }
         }

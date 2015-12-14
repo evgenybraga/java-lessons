@@ -19,8 +19,8 @@ public class TestFridge {
         int row = 0;
         int col = 0;
         int cnt = 0;
-        //FridgeGame game = new FridgeGame(4);
-        FridgeGame game = new FridgeGame(fr);
+        FridgeGame game = new FridgeGame(4);
+        //FridgeGame game = new FridgeGame(fr);
         //System.out.println("Base state");
         game.printFridgeState();
 
@@ -42,7 +42,7 @@ public class TestFridge {
         {
             //game.switchState(game.getLockedState(), true);
             game.doSwitch(game.getListToSwitch());
-            game.switchState(FridgeGame.State.locked, false);
+            //game.switchState(FridgeGame.State.locked, false);
             System.out.print("");
             cnt++;
         }

@@ -177,29 +177,4 @@ public class ArrayUtils {
         }
         return false;
     }
-
-    public static String toString(int data) {
-        int length = data < 0 ? 2 : 1;
-        int rank = Math.abs(data);
-        char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-
-        while (rank >= 10) {
-            rank = rank / 10;
-            length++;
-        }
-        char[] out = new char[length];
-
-        out[0] = (data == 0 ? '0':'-');
-
-        int dataUnsigned = Math.abs(data);
-        int digit = 0;
-
-        while(dataUnsigned > 0) {
-            length--;
-            digit = dataUnsigned % 10;
-            dataUnsigned /= 10;
-            out[length] = numbers[digit];
-        }
-        return new String(out);
-    }
 }
