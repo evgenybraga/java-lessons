@@ -23,17 +23,23 @@ public class Converter {
     }
 
     public static String toString(double value) throws NumberFormatException {
-        Double.toString(123);
-        return null;
+        int integerPart = (int)value;
+        double fractionalPart = value - integerPart;
+
+        System.out.println("integerPart = [" + integerPart + "]");
+        System.out.println("fractionalPart = [" + fractionalPart + "]");
+
+        return "Standart function value is = [" +  String.valueOf(value) + "]";
     }
 
     public static double parseDouble(String value) throws NumberFormatException {
-        Double.parseDouble("987564");
-        return -1;
+
+        return -1;//Double.parseDouble(value);
     }
 
 
     public static void main(String[] args) {
+        /*
         System.out.println(parseInt("1"));
         System.out.println(parseInt("+1"));
         System.out.println(parseInt("-1"));
@@ -42,14 +48,14 @@ public class Converter {
         System.out.println(parseInt("-000098256"));
         System.out.println(parseInt("+000098256"));
         System.out.println(parseInt("-98256000"));
-         System.out.println(parseInt("98256000"));
+        System.out.println(parseInt("98256000"));
         System.out.println(parseInt("-000000"));
         System.out.println(parseInt("+000000"));
-
         System.out.println(parseInt("sdf"));
         System.out.println(parseInt("sdfg"));
-
-
+*/
+        System.out.println(toString(456.987654321));
+        System.out.println(toString(0.9876543209999795));
 
     }
 }
