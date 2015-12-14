@@ -17,12 +17,12 @@ public class Converter {
         }
         char[] out = new char[length];
 
-        out[0] = (data == 0 ? '0':'-');
+        out[0] = (data == 0 ? '0' : '-');
 
         int dataUnsigned = Math.abs(data);
         int digit = 0;
 
-        while(dataUnsigned > 0) {
+        while (dataUnsigned > 0) {
             length--;
             digit = dataUnsigned % 10;
             dataUnsigned /= 10;
@@ -30,4 +30,39 @@ public class Converter {
         }
         return String.valueOf(out);
     }
+    public static int parseInt(String value) throws NumberFormatException{
+        int result = 0;
+        char firstChar = value.charAt(0);
+        boolean negative = ('-' == firstChar ? true:false);
+        int length = value.length();
+        char symbol;
+        int digit = 0;
+        for (int position = ('-' == firstChar || '+' == firstChar ? 1:0); position < length; position++){
+            symbol = value.charAt(position);
+            digit = Character.digit(symbol, 10);
+            if (digit < 0) {
+                throw new NumberFormatException("Given value = [" + value + "] contains non digit characters" );
+            }
+            //System.out.println("digit = [" + digit + "]");
+            result *= 10;
+            result += digit;
+        }
+        return negative ? -result : result;
+    }
+
+    public static String toString(double value) throws NumberFormatException {
+        int integerPart = (int)value;
+        double fractionalPart = value - integerPart;
+
+        System.out.println("integerPart = [" + integerPart + "]");
+        System.out.println("fractionalPart = [" + fractionalPart + "]");
+
+        return "Standart function value is = [" +  String.valueOf(value) + "]";
+    }
+
+    public static double parseDouble(String value) throws NumberFormatException {
+
+        return -1;//Double.parseDouble(value);
+    }
+
 }
