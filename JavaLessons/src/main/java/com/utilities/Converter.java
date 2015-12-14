@@ -1,7 +1,35 @@
+package com.utilities;
+
 /**
- * Created by vkostyna on 14/12/2015.
+ * Created by ibraga on 14/12/2015.
  */
 public class Converter {
+    public static String toString(int data) {
+        //Initial length
+        int length = data < 0 ? 2 : 1;
+        int rank = Math.abs(data);
+        char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+
+        //Calculate length for array of chars
+        while (rank >= 10) {
+            rank /= 10;
+            length++;
+        }
+        char[] out = new char[length];
+
+        out[0] = (data == 0 ? '0' : '-');
+
+        int dataUnsigned = Math.abs(data);
+        int digit = 0;
+
+        while (dataUnsigned > 0) {
+            length--;
+            digit = dataUnsigned % 10;
+            dataUnsigned /= 10;
+            out[length] = numbers[digit];
+        }
+        return String.valueOf(out);
+    }
     public static int parseInt(String value) throws NumberFormatException{
         int result = 0;
         char firstChar = value.charAt(0);
@@ -37,25 +65,4 @@ public class Converter {
         return -1;//Double.parseDouble(value);
     }
 
-
-    public static void main(String[] args) {
-        /*
-        System.out.println(parseInt("1"));
-        System.out.println(parseInt("+1"));
-        System.out.println(parseInt("-1"));
-        System.out.println(parseInt("-98256"));
-        System.out.println(parseInt("98256"));
-        System.out.println(parseInt("-000098256"));
-        System.out.println(parseInt("+000098256"));
-        System.out.println(parseInt("-98256000"));
-        System.out.println(parseInt("98256000"));
-        System.out.println(parseInt("-000000"));
-        System.out.println(parseInt("+000000"));
-        System.out.println(parseInt("sdf"));
-        System.out.println(parseInt("sdfg"));
-*/
-        System.out.println(toString(456.987654321));
-        System.out.println(toString(0.9876543209999795));
-
-    }
 }
