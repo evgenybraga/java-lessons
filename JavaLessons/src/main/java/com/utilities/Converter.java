@@ -30,34 +30,57 @@ public class Converter {
         }
         return String.valueOf(out);
     }
+
+
     public static int parseInt(String value) throws NumberFormatException{
         int result = 0;
         char firstChar = value.charAt(0);
         boolean negative = ('-' == firstChar ? true:false);
         int length = value.length();
-        char symbol;
-        int digit = 0;
+        char digit;
         for (int position = ('-' == firstChar || '+' == firstChar ? 1:0); position < length; position++){
-            symbol = value.charAt(position);
-            digit = Character.digit(symbol, 10);
-            if (digit < 0) {
-                throw new NumberFormatException("Given value = [" + value + "] contains non digit characters" );
-            }
-            //System.out.println("digit = [" + digit + "]");
-            result *= 10;
-            result += digit;
+            digit = value.charAt(position);
+            result = (result * 10) + (int)digit - 48;
         }
         return negative ? -result : result;
     }
 
     public static String toString(double value) throws NumberFormatException {
-        int integerPart = (int)value;
-        double fractionalPart = value - integerPart;
+        //Initial length
+        long integerPart = 0;
+        double floatPart = 0.0;
+        StringBuilder result = new StringBuilder();
+        integerPart = (long)Math.abs(value);
+        while (integerPart >= 1.0){
+            result.append(integerPart % 10);
+            integerPart /= 10.0;
+            System.out.println("integerPart = [" + integerPart + "]");
+        }
+        //result.reverse().append(".");
 
-        System.out.println("integerPart = [" + integerPart + "]");
-        System.out.println("fractionalPart = [" + fractionalPart + "]");
+        return String.valueOf(result);
 
-        return "Standart function value is = [" +  String.valueOf(value) + "]";
+        //return String.valueOf(value);
+/*
+        //Calculate length for array of chars
+        while (rank >= 10) {
+            rank /= 10;
+            length++;
+        }
+        char[] out = new char[length];
+
+        out[0] = (value == 0 ? '0' : '-');
+
+        double dataUnsigned = Math.abs(value);
+        double digit = 0;
+
+        while (dataUnsigned > 0) {
+            length--;
+            digit = dataUnsigned % 10;
+            dataUnsigned /= 10;
+            out[length] = numbers[(int)digit];
+        }
+        return String.valueOf(out);*/
     }
 
     public static double parseDouble(String value) throws NumberFormatException {
