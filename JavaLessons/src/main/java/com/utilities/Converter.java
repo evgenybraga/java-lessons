@@ -48,14 +48,21 @@ public class Converter {
     public static String toString(double value) throws NumberFormatException {
         //Initial length
         long integerPart = 0;
-        double floatPart = 0.0;
+        double floatPart = value % 1d;
         StringBuilder result = new StringBuilder();
         integerPart = (long)Math.abs(value);
-        while (integerPart >= 1.0){
+        while (integerPart >= 1){
             result.append(integerPart % 10);
             integerPart /= 10.0;
             System.out.println("integerPart = [" + integerPart + "]");
         }
+
+
+/*        while (floatPart <= 1d){
+            result.append(integerPart % 10);
+            integerPart /= 10.0;
+            System.out.println("integerPart = [" + integerPart + "]");
+        }*/
         //result.reverse().append(".");
 
         return String.valueOf(result);

@@ -22,10 +22,10 @@ public class FridgeGame {
         final String description;
         State state;
 
-        Latch(int row, int col, State state) {
+        Latch(int row, int column, State state) {
             this.row = row;
-            this.column = col;
-            this.description = "row = ".concat(String.valueOf(row).concat("; col = ").concat(String.valueOf(col)));
+            this.column = column;
+            this.description = "row = ".concat(String.valueOf(row).concat("; column = ").concat(String.valueOf(column)));
             this.state = state;
             //this.stateToPrint = (state == State.opened ? STATE_OPEN:STATE_LOCKED);
         }
@@ -91,18 +91,17 @@ public class FridgeGame {
         }
     }
 
-    private void setState(int row, int col, State state) throws IndexOutOfBoundsException {
+    private void setState(int row, int column, State state) throws IndexOutOfBoundsException {
         try {
-            latches[row][col].state = state;
+            latches[row][column].state = state;
         } catch (IndexOutOfBoundsException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public State getState(int row, int col) {
+    public State getState(int row, int column) throws IndexOutOfBoundsException {
         try {
-            return latches[row][col].state;
-
+            return latches[row][column].state;
         } catch (IndexOutOfBoundsException e) {
             System.out.println(e.getMessage());
             return null;
@@ -131,6 +130,39 @@ public class FridgeGame {
         return (getLatchList(state).size() > 0 ? true : false);
     }
 
+
+    public void invertState(int row, int column) {
+        if (getState(row, column) == State.opened) {
+            setState(row, column, State.locked);
+        } else {
+            setState(row, column, State.opened);
+        }
+    }
+
+    public void doSwitch(int row, int column) {
+        invertState(row, column);
+        for (int index = 0; index < size; index++) {
+            if (index != row) {
+                invertState(index, column);
+            }
+            if (index != column) {
+                invertState(row, index);
+            }
+        }
+    }
+
+    public void doSwitch(ArrayList<Latch> latch) {
+        int switches = 0;
+        for (Latch element : latch) {
+            doSwitch(element.row, element.column);
+            System.out.println("Switching " + element.description);
+            printFridgeState();
+            switches++;
+        }
+        System.out.println("Switched amount = " + switches);
+    }
+
+
     /**
      * Switch all latches of specified state
      * Also exists conditional print of result
@@ -153,48 +185,7 @@ public class FridgeGame {
         }
     }
 
-    public void invertState(int row, int col) {
-        if (getState(row, col) == State.opened) {
-            setState(row, col, State.locked);
-        } else {
-            setState(row, col, State.opened);
-        }
-    }
 
-    public void doSwitch(int row, int col) {
-        invertState(row, col);
-        for (int index = 0; index < size; index++) {
-            if (index != row) {
-                invertState(index, col);
-            }
-            if (index != col) {
-                invertState(row, index);
-            }
-        }
-    }
-
-    public void doSwitch(ArrayList<Latch> latch) {
-        int switches = 0;
-        for (Latch element : latch) {
-            doSwitch(element.row, element.column);
-            System.out.println("Switching " + element.description);
-            printFridgeState();
-            switches++;
-        }
-        System.out.println("Switched amount = " + switches);
-    }
-
-    public void printFridgeState() {
-        System.out.println("----------------------");
-        for (int row = 0; row < size; row++) {
-            System.out.print("[ ");
-            for (int col = 0; col < size; col++) {
-                System.out.print((latches[row][col].state == State.opened ? STATE_OPEN : STATE_LOCKED) + " ");
-            }
-            System.out.println("]");
-        }
-        System.out.println("----------------------");
-    }
 
     /**
      * @param row
@@ -221,7 +212,7 @@ public class FridgeGame {
      */
     public ArrayList<Latch> getListToSwitch() {
         ArrayList<Latch> latchLocked = getLatchList(State.locked);
-        ArrayList<Latch> latchToSwitch = new ArrayList<Latch>(0);
+        ArrayList<Latch> latchToSwitch = new ArrayList<Latch>();
         for (Latch locked : latchLocked) {
             if ((sameStateCount(locked.row, locked.column) & 1) != 0) {
                 latchToSwitch.add(locked);
@@ -230,4 +221,16 @@ public class FridgeGame {
         return latchToSwitch;
     }
 
+
+    public void printFridgeState() {
+        System.out.println("----------------------");
+        for (int row = 0; row < size; row++) {
+            System.out.print("[ ");
+            for (int column = 0; column < size; column++) {
+                System.out.print((latches[row][column].state == State.opened ? STATE_OPEN : STATE_LOCKED) + " ");
+            }
+            System.out.println("]");
+        }
+        System.out.println("----------------------");
+    }
 }
