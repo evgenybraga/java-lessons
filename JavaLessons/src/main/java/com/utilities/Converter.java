@@ -56,43 +56,12 @@ public class Converter {
             integerPart /= 10.0;
             System.out.println("integerPart = [" + integerPart + "]");
         }
-
-
-/*        while (floatPart <= 1d){
-            result.append(integerPart % 10);
-            integerPart /= 10.0;
-            System.out.println("integerPart = [" + integerPart + "]");
-        }*/
-        //result.reverse().append(".");
-
         return String.valueOf(result);
-
-        //return String.valueOf(value);
-/*
-        //Calculate length for array of chars
-        while (rank >= 10) {
-            rank /= 10;
-            length++;
-        }
-        char[] out = new char[length];
-
-        out[0] = (value == 0 ? '0' : '-');
-
-        double dataUnsigned = Math.abs(value);
-        double digit = 0;
-
-        while (dataUnsigned > 0) {
-            length--;
-            digit = dataUnsigned % 10;
-            dataUnsigned /= 10;
-            out[length] = numbers[(int)digit];
-        }
-        return String.valueOf(out);*/
     }
 
     public static double parseDouble(String value) throws NumberFormatException {
 
-        return -1;//Double.parseDouble(value);
+        return Double.parseDouble(value);
     }
 
 }

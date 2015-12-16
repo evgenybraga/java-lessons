@@ -19,11 +19,12 @@ public class TestFridge {
         int row = 0;
         int col = 0;
         int cnt = 0;
-        //FridgeGame game = new FridgeGame(4);
-        FridgeGame game = new FridgeGame(fr);
+        FridgeGame game = new FridgeGame(4);
+        //FridgeGame game = new FridgeGame(fr);
         //System.out.println("Base state");
-        game.solve();
         game.printFridgeState();
+        game.solve();
+
     }
 
 }
