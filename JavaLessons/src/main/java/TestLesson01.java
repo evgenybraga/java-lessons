@@ -2,19 +2,18 @@
  * Created by ibraga on 24/11/2015.
  */
 import com.list.CustomArrayList;
-import com.utilities.*;
+import com.list.CustomLinkedList;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.sql.Timestamp;
+import java.util.LinkedList;
 
 public class TestLesson01 {
 
     public static void main(String[] args) {
-/*        System.out.println(Converter.toString(123.456789));
+/*      System.out.println(Converter.toString(123.456789));
         System.out.println(Converter.toString(123.987654));*/
-        CustomArrayList a = new CustomArrayList();
+        //CustomArrayList a = new CustomArrayList();
+        CustomLinkedList a = new CustomLinkedList();
         a.add("String 0");
         a.add("String 1");
         a.add(2, "String 4");
@@ -30,6 +29,27 @@ public class TestLesson01 {
             System.out.println(a.get(i).toString());
         }
         System.out.println(a.size());
+
+        System.out.println("Native Linked List");
+        LinkedList<String> lst = new LinkedList<String>();
+        //ArrayList<String> lst = new ArrayList<String>();
+        lst.add("String 0");
+        lst.add("String 1");
+        lst.add(2, "String 4");
+        lst.add(2, "String 2");
+        lst.add(3, "String 3");
+        lst.add("String 5");
+        System.out.println(lst.indexOf( "String 0"));
+        lst.remove(1);
+        System.out.println(lst.lastIndexOf("String 0"));
+        System.out.println(lst.contains("String 4"));
+        System.out.println(lst.contains("String 6"));
+        for (int i = 0; i < lst.size(); i++){
+            System.out.println(lst.get(i).toString());
+        }
+        System.out.println(lst.size());
+
+
 
     }
 }

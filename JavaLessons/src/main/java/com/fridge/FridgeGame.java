@@ -11,10 +11,11 @@ public class FridgeGame {
     private final static char STATE_OPEN = (char) 8212;  //"—"
     private final static char STATE_LOCKED = (char) 124; //"|"
 
-    public enum State {
+    private enum State {
         opened,
         locked
     }
+
 
     private class Latch {
         final int row;
@@ -29,8 +30,8 @@ public class FridgeGame {
             this.state = state;
             //this.stateToPrint = (state == State.opened ? STATE_OPEN:STATE_LOCKED);
         }
-
     }
+
 
     private class FridgeException extends Exception {
 
@@ -58,7 +59,7 @@ public class FridgeGame {
         }
         // Start tangle matrix
         for (int row = 0; row < size; row++) {
-            doSwitch(random.nextInt(size), random.nextInt(size));
+            singleSwitch(random.nextInt(size), random.nextInt(size));
         }
 
     }
@@ -89,6 +90,14 @@ public class FridgeGame {
         } catch (FridgeException e) {
             e.printStackTrace();
         }
+    }
+
+    public static State opened() {
+        return State.opened;
+    }
+
+    public static State locked() {
+        return State.locked;
     }
 
     private void setState(int row, int column, State state) throws IndexOutOfBoundsException {
@@ -139,7 +148,13 @@ public class FridgeGame {
         }
     }
 
-    public void doSwitch(int row, int column) {
+    /**
+     * Switch given latch and connected to them neighbours to opposite state
+     *
+     * @param row
+     * @param column
+     */
+    public void singleSwitch(int row, int column) {
         invertState(row, column);
         for (int index = 0; index < size; index++) {
             if (index != row) {
@@ -151,48 +166,40 @@ public class FridgeGame {
         }
     }
 
-    public void doSwitch(ArrayList<Latch> latch) {
+    public void switchState(State state, boolean printResult) {
+        ArrayList<Latch> latchList = getLatchList(state);
+        ArrayList<Latch> latchToSwitch = new ArrayList<Latch>();
         int switches = 0;
-        for (Latch element : latch) {
-            doSwitch(element.row, element.column);
+
+        for (Latch latch : latchList) {
+            if ((stateCount(latch.row, latch.column) & 1) != 0) {
+                latchToSwitch.add(latch);
+            }
+        }
+
+        for (Latch element : (latchToSwitch.size() > 0 ? latchToSwitch : latchList)) {
             System.out.println("Switching " + element.description);
-            printFridgeState();
+            if (isStateExists(state)) {
+                singleSwitch(element.row, element.column);
+            }
+            if (printResult) {
+                printFridgeState();
+            }
             switches++;
         }
         System.out.println("Switched amount = " + switches);
+        printFridgeState();
     }
 
 
     /**
-     * Switch all latches of specified state
-     * Also exists conditional print of result
+     * Get number of latches in same state as latch[row, column] in row and column + specified latch
      *
-     * @param state
-     * @param printResult
-     */
-    public void switchState(State state, boolean printResult) {
-        ArrayList<Latch> latchesList = getLatchList(state);
-        if (latchesList.size() > 0) {
-            int latchId = 0;
-            while (latchId < latchesList.size() && isStateExists(state)) {
-                doSwitch(latchesList.get(latchId).row, latchesList.get(latchId).column);
-                latchId++;
-            }
-            if (printResult) {
-                System.out.println(latchId + " switched");
-                printFridgeState();
-            }
-        }
-    }
-
-
-
-    /**
      * @param row
      * @param column
      * @return
      */
-    private int sameStateCount(int row, int column) {
+    private int stateCount(int row, int column) {
         State current = getState(row, column);
         int latchStateCount = 1;
         for (int index = 0; index < size; index++) {
@@ -207,20 +214,6 @@ public class FridgeGame {
         return latchStateCount;
     }
 
-    /**
-     *
-     */
-    public ArrayList<Latch> getListToSwitch() {
-        ArrayList<Latch> latchLocked = getLatchList(State.locked);
-        ArrayList<Latch> latchToSwitch = new ArrayList<Latch>();
-        for (Latch locked : latchLocked) {
-            if ((sameStateCount(locked.row, locked.column) & 1) != 0) {
-                latchToSwitch.add(locked);
-            }
-        }
-        return latchToSwitch;
-    }
-
 
     public void printFridgeState() {
         System.out.println("----------------------");
@@ -233,4 +226,14 @@ public class FridgeGame {
         }
         System.out.println("----------------------");
     }
+
+    public void solve() {
+        while (isStateExists(FridgeGame.locked())) {
+            switchState(FridgeGame.locked(), false);
+            System.out.print("");
+        }
+    }
+
+
 }
+
