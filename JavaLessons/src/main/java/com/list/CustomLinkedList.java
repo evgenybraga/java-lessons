@@ -1,103 +1,63 @@
 package com.list;
 
-import java.util.Arrays;
-
-/**
- * Created by admin on 15.12.2015.
- */
 public class CustomLinkedList implements List {
 
-    private static final int chunkSize = 3;
-    private int listSize = 0;
-    private Object[] array;
+    private static class Node {
+        Object item;
+        Node next;
+        Node prev;
 
-    public CustomLinkedList() {
-        array = new Object[chunkSize];
-    }
-
-    public CustomLinkedList(int initial) {
-        array = new Object[initial];
-    }
-
-    private void extend() {
-        if (listSize + 1 > array.length) {
-            array = Arrays.copyOf(array, array.length + chunkSize);
+        Node(Node prev, Object element, Node next) {
+            this.item = element;
+            this.next = next;
+            this.prev = prev;
         }
     }
 
+    private int size = 0;
+    private Node first;
+    private Node last;
+
+
+    public CustomLinkedList() {
+    }
+
+
     public void add(Object value) {
-        extend();
-        array[listSize++] = value;
     }
 
     public void add(int index, Object value) {
-        if (index > listSize || index < 0) {
-            throw new IndexOutOfBoundsException("Index [" + index + "] is out of bound");
-        }
-        if (index < listSize) {
-            extend();
-            System.arraycopy(array, index, array, index + 1, listSize - index + 1);
-            array[index] = value;
-            listSize++;
-        } else {
-            add(value);
-        }
     }
 
     public Object set(int index, Object value) {
-        if (index >= listSize || index < 0) {
-            throw new IndexOutOfBoundsException("Index [" + index + "] is out of bound");
-        }
-        Object old = array[index];
-        array[index] = value;
-        return old;
+        return -1;
     }
 
     public Object remove(int index) {
-        if (index > listSize || index < 0) {
-            throw new IndexOutOfBoundsException("Index [" + index + "] is out of bound");
-        }
-        Object old = array[index];
-        System.arraycopy(array, index + 1, array, index, listSize - index - 1);
-        array[--listSize] = null;
-        return old;
+        return -1;
     }
 
     public int size() {
-        return listSize;
+        return size;
     }
 
     public boolean isEmpty() {
-        return listSize == 0;
+        return size == 0;
     }
 
     public void clear() {
-        for (int index = 0; index < listSize; index++) {
-            array[index] = null;
-        }
-        listSize = 0;
+        size = 0;
     }
 
     public Object get(int index) {
-        if (index >= listSize || index < 0) {
-            throw new IndexOutOfBoundsException("Index [" + index + "] is out of bound");
-        }
-        return array[index];
+        return -1;
     }
 
     public int indexOf(Object value) {
-        for (int index = 0; index < listSize; index++){
-            if (array[index].equals(value))
-                return index;
-        }
         return -1;
     }
 
     public int lastIndexOf(Object value) {
-        for (int index = listSize - 1; index >= 0; index--){
-            if (array[index].equals(value))
-                return index;
-        }
         return -1;
     }
 
