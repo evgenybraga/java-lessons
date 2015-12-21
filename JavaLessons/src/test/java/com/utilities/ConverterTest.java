@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class ConverterTest extends TestCase {
 
     @Test
-    public void testToString() throws Exception {
+    public void testToStringInteger() throws Exception {
         assertEquals("-6843", Converter.toString(-6843));
         assertEquals("-1", Converter.toString(-1));
         assertEquals("0", Converter.toString(-0));
@@ -36,11 +36,30 @@ public class ConverterTest extends TestCase {
         //assertEquals("Given value = [sdf] contains non digit characters", Converter.parseInt("sdf"));
     }
 
-    public void testToString1() throws Exception {
-
+    public void testToStringDouble() throws Exception {
+        assertEquals("0.0", Converter.toString(-0.0));
+        assertEquals("0.0", Converter.toString(0.0));
+        assertEquals("-0.1", Converter.toString(-0.1d));
+        assertEquals("-0.4560000000000000", Converter.toString(-0.456d));
+        assertEquals("0.1", Converter.toString(0.1d));
+        assertEquals("0.4560000000000000", Converter.toString(0.456d));
+        assertEquals("1.0", Converter.toString(1.0d));
+        assertEquals("-1.0", Converter.toString(-1.0d));
+        assertEquals("123.0", Converter.toString(123.0d));
+        assertEquals("-123.0", Converter.toString(-123.0d));
+        assertEquals("-123.45600000000000", Converter.toString(-123.456d));
+        assertEquals("123.45600000000000", Converter.toString(123.456d));
     }
 
     public void testParseDouble() throws Exception {
-
+        assertEquals(0.0, Converter.parseDouble("-0.0"), 0);
+        assertEquals(0.0, Converter.parseDouble("0.0"), 0);
+        assertEquals(-123.0, Converter.parseDouble("-123.0"), 0);
+        assertEquals(-0.123, Converter.parseDouble("-0.123"), 0);
+        assertEquals(-123.456, Converter.parseDouble("-123.456"), 0);
+        assertEquals(123.0, Converter.parseDouble("123.0"), 0);
+        assertEquals(0.123, Converter.parseDouble("0.123"), 0);
+        assertEquals(123.456, Converter.parseDouble("123.456"), 0);
+        assertEquals(0.123456789, Converter.parseDouble("0.123456789"), 0);
     }
 }
