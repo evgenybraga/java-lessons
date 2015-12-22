@@ -93,7 +93,6 @@ public class ArrayUtilsTest {
         assertEquals(true, ArrayUtils.containsArray(charArray, charArray));
         assertEquals(true, ArrayUtils.containsArray(charArray, new char[]{'1'}));
         assertEquals(false, ArrayUtils.containsArray(charArray, new char[]{'2', '3', '4', '9'}));
-
     }
 
     @Test
@@ -121,12 +120,20 @@ public class ArrayUtilsTest {
 
     @Test
     public void testIsLeapYear() throws Exception {
-
+        assertEquals(true, ArrayUtils.isLeapYear(2000));
+        assertEquals(true, ArrayUtils.isLeapYear(2004));
+        assertEquals(true, ArrayUtils.isLeapYear(2008));
+        assertEquals(true, ArrayUtils.isLeapYear(2012));
+        assertEquals(true, ArrayUtils.isLeapYear(2016));
+        assertEquals(true, ArrayUtils.isLeapYear(2020));
+        assertEquals(false, ArrayUtils.isLeapYear(2015));
     }
 
     @Test
     public void testFilterStringArray() throws Exception {
-
+        String[] array = {"123", "234", "345", "456", "567", "678"};
+        assertArrayEquals(new String[]{"234", "345", "456"}, ArrayUtils.filterArray(array, "4"));
+        assertArrayEquals(new String[] {}, ArrayUtils.filterArray(array, "9"));
     }
 
     @Test
@@ -143,6 +150,8 @@ public class ArrayUtilsTest {
 
     @Test
     public void testIsDuplicatesExists() throws Exception {
-
+        assertEquals(true, ArrayUtils.isDuplicatesExists(new byte[]{1, 2, 9, 7, 6, 5, -1, 0, 127, 2}));
+        assertEquals(false, ArrayUtils.isDuplicatesExists(new byte[]{1, 2, 9, 7, 6, 5, -1, 0, 127}));
+        assertEquals(false, ArrayUtils.isDuplicatesExists(new byte[]{}));
     }
 }

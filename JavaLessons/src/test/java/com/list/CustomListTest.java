@@ -18,7 +18,7 @@ public class CustomListTest {
     private List list;
     private ListFactory factory;
 
-    public CustomListTest(ListFactory factory){
+    public CustomListTest(ListFactory factory) {
         this.factory = factory;
     }
 
@@ -30,17 +30,17 @@ public class CustomListTest {
         });
     }
 
-    private static interface ListFactory{
+    private static interface ListFactory {
         public List createNewList();
     }
 
-    private static class ArrayListFactory implements ListFactory{
+    private static class ArrayListFactory implements ListFactory {
         public List createNewList() {
             return new CustomArrayList();
         }
     }
 
-    private static class LinkedListFactory implements ListFactory{
+    private static class LinkedListFactory implements ListFactory {
         public List createNewList() {
             return new CustomLinkedList();
         }
@@ -60,49 +60,76 @@ public class CustomListTest {
     @Test
     public void testAdd() throws Exception {
         list.add("String 0");
-        assertEquals(1, list.size());
+        list.add("String 1");
+        list.add("String 2");
+        assertEquals(3, list.size());
     }
 
     @Test
     public void testAddByIndex() throws Exception {
-        list.add("String 0");
-        list.add(1, "String 0");
-        assertEquals(2, list.size());
+        list.add("String 1");
+        list.add(0, "String 0");
+        assertEquals("String 0", list.get(0));
     }
 
     @Test
     public void testSet() throws Exception {
-
+        list.add("String 1");
+        list.set(0, "String 0");
+        assertEquals("String 0", list.get(0));
     }
 
     @Test
     public void testRemove() throws Exception {
-
+        list.add("String 0");
+        list.add("String 1");
+        list.add("String 2");
+        assertEquals(3, list.size());
+        list.remove(0);
+        assertEquals(2, list.size());
     }
 
     @Test
     public void testSize() throws Exception {
-
+        assertEquals(0, list.size());
     }
 
     @Test
     public void testIsEmpty() throws Exception {
+        assertEquals(true, list.isEmpty());
+        list.add("String 0");
+        assertEquals(false, list.isEmpty());
 
     }
 
     @Test
     public void testClear() throws Exception {
-
+        list.add("String 0");
+        list.add("String 1");
+        list.add("String 2");
+        assertEquals(false, list.isEmpty());
+        list.clear();
+        assertEquals(true, list.isEmpty());
     }
 
     @Test
     public void testGet() throws Exception {
-
+        list.add("String 0");
+        list.add("String 1");
+        list.add("String 2");
+        assertEquals("String 0", list.get(0));
+        assertEquals("String 1", list.get(1));
+        assertEquals("String 2", list.get(2));
+        assertEquals("String 2", list.get(3));
     }
 
     @Test
     public void testIndexOf() throws Exception {
-
+        list.add("String 0");
+        list.add("String 1");
+        list.add("String 2");
+        assertEquals(0, list.indexOf("String 0"));
+        assertEquals(-1, list.indexOf("String 9"));
     }
 
     @Test
