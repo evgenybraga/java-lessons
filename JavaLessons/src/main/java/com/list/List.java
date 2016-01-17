@@ -1,16 +1,15 @@
 package com.list;
 
-/**
- * Created by admin on 15.12.2015.
- */
-public interface List {
-    void add(Object value);
+import java.util.Iterator;
 
-    void add(int index, Object value);
+public interface List<E> {
+    void add(E value);
 
-    Object set(int index, Object value);
+    void add(int index, E value);
 
-    Object remove(int index);
+    E set(int index, E value);
+
+    E remove(int index);
 
     int size();
 
@@ -18,11 +17,13 @@ public interface List {
 
     void clear();
 
-    Object get(int index);
+    E get(int index);
 
-    int indexOf(Object value);
+    int indexOf(E value);
 
-    int lastIndexOf(Object value);
+    int lastIndexOf(E value);
 
-    boolean contains(Object value);
+    boolean contains(E value);
+
+    Iterator iterator();
 }

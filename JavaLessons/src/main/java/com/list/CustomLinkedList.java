@@ -1,13 +1,13 @@
 package com.list;
 
-public class CustomLinkedList implements List {
+public class CustomLinkedList<E> implements List<E>{
 
-    private static class Node {
-        Object item;
-        Node next;
-        Node previous;
+    private static class Node<E> {
+        E item;
+        Node<E> next;
+        Node<E> previous;
 
-        Node(Node previous, Object element, Node next) {
+        Node(Node<E> previous, E element, Node<E> next) {
             this.item = element;
             this.next = next;
             this.previous = previous;
@@ -15,23 +15,23 @@ public class CustomLinkedList implements List {
     }
 
     private int size = 0;
-    private Node first;
-    private Node last;
+    private Node<E> first;
+    private Node<E> last;
 
 
     public CustomLinkedList() {
     }
 
-    Node getNode(int index) {
-        Node current = first;
+    Node<E> getNode(int index) {
+        Node<E> current = first;
         for (int i = 0; i < index; i++)
             current = current.next;
         return current;
     }
 
-    public void add(Object value) {
-        Node backupLast = last;
-        Node newNode = new Node(backupLast, value, null);
+    public void add(E value) {
+        Node<E> backupLast = last;
+        Node<E> newNode = new Node<E>(backupLast, value, null);
         last = newNode;
         if (backupLast == null)
             first = newNode;
@@ -40,20 +40,20 @@ public class CustomLinkedList implements List {
         size++;
     }
 
-    public void add(int index, Object value) {
+    public void add(int index, E value) {
         if (!(index >= 0 && index <= size))
             throw new IndexOutOfBoundsException("Index = [" + index + "]");
-        //if add to and then just add
+        //if add to end then just add
         if (index == size)
             add(value);
         else {
             // Node from right to re-link previous
-            Node right = getNode(index);
+            Node<E> right = getNode(index);
 
             // Node from left to re-link next
-            Node left = right.previous;
+            Node<E> left = right.previous;
 
-            Node newNode = new Node(left, value, right);
+            Node<E> newNode = new Node<E>(left, value, right);
             // re-link previous
             right.previous = newNode;
 
@@ -67,25 +67,25 @@ public class CustomLinkedList implements List {
         }
     }
 
-    public Object set(int index, Object value) {
+    public E set(int index, E value) {
         if (!(index >= 0 && index < size))
             throw new IndexOutOfBoundsException("Index = [" + index + "]");
-        Node node = getNode(index);
-        Object oldValue = node.item;
+        Node<E> node = getNode(index);
+        E oldValue = node.item;
         node.item = value;
         return oldValue;
     }
 
-    public Object remove(int index) {
+    public E remove(int index) {
         if (!(index >= 0 && index < size))
             throw new IndexOutOfBoundsException("Index = [" + index + "]");
 
-        Node trash = getNode(index);
-        Object content = trash.item;
+        Node<E> trash = getNode(index);
+        E content = trash.item;
 
         //Save next prev references
-        Node next = trash.next;
-        Node previous = trash.previous;
+        Node<E> next = trash.next;
+        Node<E> previous = trash.previous;
 
         if (previous == null) {
             first = next;
@@ -114,9 +114,9 @@ public class CustomLinkedList implements List {
     }
 
     public void clear() {
-        Node current = first;
+        Node<E> current = first;
         while (current != null) {
-            Node next = current.next;
+            Node<E> next = current.next;
             current.item = null;
             current.next = null;
             current.previous = null;
@@ -125,15 +125,15 @@ public class CustomLinkedList implements List {
         }
     }
 
-    public Object get(int index) {
+    public E get(int index) {
         if (!(index >= 0 && index <= size))
             throw new IndexOutOfBoundsException("Index = [" + index + "]");
         return getNode(index).item;
     }
 
-    public int indexOf(Object value) {
+    public int indexOf(E value) {
         int index = 0;
-        for (Node element = first; element != null; element = element.next) {
+        for (Node<E> element = first; element != null; element = element.next) {
             if ((value != null && value.equals(element.item)) || (value == null && element.item == null))
                 return index;
             index++;
@@ -141,9 +141,9 @@ public class CustomLinkedList implements List {
         return -1;
     }
 
-    public int lastIndexOf(Object value) {
+    public int lastIndexOf(E value) {
         int index = size;
-        for (Node x = last; x != null; x = x.previous) {
+        for (Node<E> x = last; x != null; x = x.previous) {
             index--;
             if ((value == null && x.item == null) || (value != null && value.equals(x.item)))
                 return index;
@@ -151,7 +151,7 @@ public class CustomLinkedList implements List {
         return -1;
     }
 
-    public boolean contains(Object value) {
+    public boolean contains(E value) {
         return indexOf(value) >= 0;
     }
 }

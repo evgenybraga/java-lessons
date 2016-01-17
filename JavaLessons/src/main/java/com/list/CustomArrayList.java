@@ -1,22 +1,23 @@
 package com.list;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * Created by admin on 15.12.2015.
  */
-public class CustomArrayList implements List {
+public class CustomArrayList<E> implements List<E> {
 
     private static final int chunkSize = 3;
     private int listSize = 0;
-    private Object[] array;
+    private E[] array;
 
     public CustomArrayList() {
-        array = new Object[chunkSize];
+        array = (E[]) new Object[chunkSize];
     }
 
     public CustomArrayList(int initial) {
-        array = new Object[initial];
+        array = (E[]) new Object[initial];
     }
 
     private void extend() {
@@ -25,12 +26,12 @@ public class CustomArrayList implements List {
         }
     }
 
-    public void add(Object value) {
+    public void add(E value) {
         extend();
         array[listSize++] = value;
     }
 
-    public void add(int index, Object value) {
+    public void add(int index, E value) {
         if (index > listSize || index < 0) {
             throw new IndexOutOfBoundsException("Index [" + index + "] is out of bound");
         }
@@ -44,20 +45,20 @@ public class CustomArrayList implements List {
         }
     }
 
-    public Object set(int index, Object value) {
+    public E set(int index, E value) {
         if (index >= listSize || index < 0) {
             throw new IndexOutOfBoundsException("Index [" + index + "] is out of bound");
         }
-        Object old = array[index];
+        E old = array[index];
         array[index] = value;
         return old;
     }
 
-    public Object remove(int index) {
+    public E remove(int index) {
         if (index > listSize || index < 0) {
             throw new IndexOutOfBoundsException("Index [" + index + "] is out of bound");
         }
-        Object old = array[index];
+        E old = array[index];
         System.arraycopy(array, index + 1, array, index, listSize - index - 1);
         array[--listSize] = null;
         return old;
@@ -78,30 +79,35 @@ public class CustomArrayList implements List {
         listSize = 0;
     }
 
-    public Object get(int index) {
+    public E get(int index) {
         if (index >= listSize || index < 0) {
             throw new IndexOutOfBoundsException("Index [" + index + "] is out of bound");
         }
         return array[index];
     }
 
-    public int indexOf(Object value) {
-        for (int index = 0; index < listSize; index++){
+    public int indexOf(E value) {
+        for (int index = 0; index < listSize; index++) {
             if (array[index].equals(value))
                 return index;
         }
         return -1;
     }
 
-    public int lastIndexOf(Object value) {
-        for (int index = listSize - 1; index >= 0; index--){
+    public int lastIndexOf(E value) {
+        for (int index = listSize - 1; index >= 0; index--) {
             if (array[index].equals(value))
                 return index;
         }
         return -1;
     }
 
-    public boolean contains(Object value) {
+    public boolean contains(E value) {
         return indexOf(value) >= 0;
     }
+
+    public Iterator iterator() {
+        return null;
+    }
+
 }

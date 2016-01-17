@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 @RunWith(Parameterized.class)
 public class CustomListTest {
 
-    private List list;
+    private List<String> list;
     private ListFactory factory;
 
     public CustomListTest(ListFactory factory) {
@@ -120,7 +120,6 @@ public class CustomListTest {
         assertEquals("String 0", list.get(0));
         assertEquals("String 1", list.get(1));
         assertEquals("String 2", list.get(2));
-        assertEquals("String 2", list.get(3));
     }
 
     @Test
