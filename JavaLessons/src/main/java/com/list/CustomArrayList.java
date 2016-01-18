@@ -3,9 +3,6 @@ package com.list;
 import java.util.Arrays;
 import java.util.Iterator;
 
-/**
- * Created by admin on 15.12.2015.
- */
 public class CustomArrayList<E> implements List<E> {
 
     private static final int chunkSize = 3;
@@ -26,11 +23,13 @@ public class CustomArrayList<E> implements List<E> {
         }
     }
 
+    @Override
     public void add(E value) {
         extend();
         array[listSize++] = value;
     }
 
+    @Override
     public void add(int index, E value) {
         if (index > listSize || index < 0) {
             throw new IndexOutOfBoundsException("Index [" + index + "] is out of bound");
@@ -45,6 +44,7 @@ public class CustomArrayList<E> implements List<E> {
         }
     }
 
+    @Override
     public E set(int index, E value) {
         if (index >= listSize || index < 0) {
             throw new IndexOutOfBoundsException("Index [" + index + "] is out of bound");
@@ -54,6 +54,7 @@ public class CustomArrayList<E> implements List<E> {
         return old;
     }
 
+    @Override
     public E remove(int index) {
         if (index > listSize || index < 0) {
             throw new IndexOutOfBoundsException("Index [" + index + "] is out of bound");
@@ -64,14 +65,17 @@ public class CustomArrayList<E> implements List<E> {
         return old;
     }
 
+    @Override
     public int size() {
         return listSize;
     }
 
+    @Override
     public boolean isEmpty() {
         return listSize == 0;
     }
 
+    @Override
     public void clear() {
         for (int index = 0; index < listSize; index++) {
             array[index] = null;
@@ -79,6 +83,7 @@ public class CustomArrayList<E> implements List<E> {
         listSize = 0;
     }
 
+    @Override
     public E get(int index) {
         if (index >= listSize || index < 0) {
             throw new IndexOutOfBoundsException("Index [" + index + "] is out of bound");
@@ -86,6 +91,7 @@ public class CustomArrayList<E> implements List<E> {
         return array[index];
     }
 
+    @Override
     public int indexOf(E value) {
         for (int index = 0; index < listSize; index++) {
             if (array[index].equals(value))
@@ -94,6 +100,7 @@ public class CustomArrayList<E> implements List<E> {
         return -1;
     }
 
+    @Override
     public int lastIndexOf(E value) {
         for (int index = listSize - 1; index >= 0; index--) {
             if (array[index].equals(value))
@@ -102,12 +109,13 @@ public class CustomArrayList<E> implements List<E> {
         return -1;
     }
 
+    @Override
     public boolean contains(E value) {
         return indexOf(value) >= 0;
     }
 
+    @Override
     public Iterator iterator() {
         return null;
     }
-
 }

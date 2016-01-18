@@ -1,6 +1,8 @@
 package com.list;
 
-public class CustomLinkedList<E> implements List<E>{
+import java.util.Iterator;
+
+public class CustomLinkedList<E> implements List<E> {
 
     private static class Node<E> {
         E item;
@@ -18,10 +20,6 @@ public class CustomLinkedList<E> implements List<E>{
     private Node<E> first;
     private Node<E> last;
 
-
-    public CustomLinkedList() {
-    }
-
     Node<E> getNode(int index) {
         Node<E> current = first;
         for (int i = 0; i < index; i++)
@@ -29,6 +27,7 @@ public class CustomLinkedList<E> implements List<E>{
         return current;
     }
 
+    @Override
     public void add(E value) {
         Node<E> backupLast = last;
         Node<E> newNode = new Node<E>(backupLast, value, null);
@@ -40,6 +39,7 @@ public class CustomLinkedList<E> implements List<E>{
         size++;
     }
 
+    @Override
     public void add(int index, E value) {
         if (!(index >= 0 && index <= size))
             throw new IndexOutOfBoundsException("Index = [" + index + "]");
@@ -67,6 +67,7 @@ public class CustomLinkedList<E> implements List<E>{
         }
     }
 
+    @Override
     public E set(int index, E value) {
         if (!(index >= 0 && index < size))
             throw new IndexOutOfBoundsException("Index = [" + index + "]");
@@ -76,6 +77,7 @@ public class CustomLinkedList<E> implements List<E>{
         return oldValue;
     }
 
+    @Override
     public E remove(int index) {
         if (!(index >= 0 && index < size))
             throw new IndexOutOfBoundsException("Index = [" + index + "]");
@@ -105,14 +107,17 @@ public class CustomLinkedList<E> implements List<E>{
         return content;
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
+    @Override
     public void clear() {
         Node<E> current = first;
         while (current != null) {
@@ -125,12 +130,14 @@ public class CustomLinkedList<E> implements List<E>{
         }
     }
 
+    @Override
     public E get(int index) {
         if (!(index >= 0 && index <= size))
             throw new IndexOutOfBoundsException("Index = [" + index + "]");
         return getNode(index).item;
     }
 
+    @Override
     public int indexOf(E value) {
         int index = 0;
         for (Node<E> element = first; element != null; element = element.next) {
@@ -141,6 +148,7 @@ public class CustomLinkedList<E> implements List<E>{
         return -1;
     }
 
+    @Override
     public int lastIndexOf(E value) {
         int index = size;
         for (Node<E> x = last; x != null; x = x.previous) {
@@ -151,7 +159,14 @@ public class CustomLinkedList<E> implements List<E>{
         return -1;
     }
 
+    @Override
     public boolean contains(E value) {
         return indexOf(value) >= 0;
     }
+
+    @Override
+    public Iterator iterator() {
+        return null;
+    }
+
 }
