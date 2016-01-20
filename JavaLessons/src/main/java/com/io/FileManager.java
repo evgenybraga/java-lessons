@@ -1,7 +1,6 @@
 package com.io;
 
 import java.io.*;
-import java.nio.file.*;
 import java.util.Arrays;
 
 public class FileManager {
@@ -14,14 +13,43 @@ public class FileManager {
      */
     public static int calculateFiles(String path) {
         int count = getFileCount(path);
-        for (File dir : getDirs(path)) {
-            count += calculateFiles(dir.getPath());
+        try {
+            for (File dir : getDirs(path)) {
+                count += calculateFiles(dir.getPath());
+            }
+            return count;
+        } catch (NullPointerException ex) {
+            System.out.println("calculateFiles");
+            System.out.println("path = [" + path + "] " + ex.getMessage());
+            return 0;
         }
-        return count;
     }
 
+
+    public static int calculateFiles2(String path) {
+        int count = 0;
+        try {
+            File root = new File(path);
+            FileFilter filter = new FileFilter() {
+                @Override
+                public boolean accept(File pathname) {
+                    return pathname.isFile();
+                }
+            };
+            count = root.listFiles(filter).length;
+
+            for (File dir : getDirs(path)) {
+                count += calculateFiles(dir.getPath());
+            }
+            return count;
+        } catch (NullPointerException ex) {
+            return 0;
+        }
+    }
+
+
     private static int getFileCount(String path) {
-        try (FileInputStream fs = new FileInputStream(new File(path))) {
+        try {
             File root = new File(path);
             FileFilter filter = new FileFilter() {
                 @Override
@@ -30,14 +58,9 @@ public class FileManager {
                 }
             };
             return root.listFiles(filter).length;
-        } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage());
-            return 0;
         } catch (NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            return 0;
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("getFileCount");
+            System.out.println("path = [" + path + "] " + ex.getMessage());
             return 0;
         }
     }
